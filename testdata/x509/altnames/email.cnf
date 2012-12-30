@@ -1,0 +1,7 @@
+[v3_req]
+subjectAltName = @alt_names
+
+[alt_names]
+email.1 = noreply@example.com
+email.2 = alt@example.com
+email.3 = postmaster@example.com

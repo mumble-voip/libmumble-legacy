@@ -1,0 +1,7 @@
+[v3_req]
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = www1.example.com
+DNS.2 = www2.example.com
+DNS.3 = www3.example.com

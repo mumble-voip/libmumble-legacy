@@ -1,0 +1,9 @@
+.ninja_log
+CMakeCache.txt
+CMakeFiles
+build.ninja
+cmake_install.cmake
+libmumble.a
+mumble-test
+mumble-demo
+rules.ninja

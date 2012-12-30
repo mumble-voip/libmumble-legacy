@@ -1,0 +1,8 @@
+[v3_req]
+keyUsage = digitalSignature, Key Encipherment, Data Encipherment
+extendedKeyUsage = TLS Web Server Authentication
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = mumble.example.com
+

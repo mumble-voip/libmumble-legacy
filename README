@@ -1,0 +1,18 @@
+What is libmumble?
+==================
+
+libmumble is an attempt at writing a cross-platform C++ library for
+implementing Mumble clients. The initial client of libmumble is
+MumbleKit, the Objective-C Mumble framework for iOS and Mac OS X.
+
+Building libmumble
+==================
+
+Note: libmumble has been developed on Ubuntu 12.10 using clang 3.0.
+These instructions expect that environment.
+
+cd 3rdparty/libuv
+make
+cd ../../
+cmake -G Ninja
+ninja
