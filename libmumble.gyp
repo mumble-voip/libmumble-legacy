@@ -12,7 +12,8 @@
 			'include_dirs': [
 				'include',
 				'src',
-				'3rdparty/libuv/include'
+				'3rdparty/libuv/include',
+				'3rdparty/openssl/include',
 			],
 			'sources': [
 				'src/Connection.cpp',
@@ -40,17 +41,20 @@
 			'cflags_cc':     ['-std=c++11'],
 			'dependencies':  [
 				'libmumble',
-				'3rdparty/libuv/uv.gyp:libuv'
+				'3rdparty/libuv/uv.gyp:libuv',
+				'3rdparty/opensslbuild/OpenSSL.gyp:libcrypto',
+				'3rdparty/opensslbuild/OpenSSL.gyp:libssl',
 			],
 			'include_dirs': [
 				'include',
 				'src',
 				'3rdparty/libuv/include',
+				'3rdparty/openssl/include',
 				'3rdparty/gtest/include',
 				'3rdparty/gtest',
 			],
 			'link_settings': {
-				'libraries': [ '-lcrypto', '-lssl', '-lpthread', '-lrt' ],
+				'libraries': [ '-lpthread', '-lrt' ],
 			},
 			'sources': [
 				'3rdparty/gtest/src/gtest-all.cc',
@@ -66,6 +70,10 @@
 						'CLANG_CXX_LANGUAGE_STANDARD': 'c++0x',
 						'CLANG_CXX_LIBRARY': 'libc++',
 					},
+					'defines': [
+						'GTEST_HAS_TR1_TUPLE=0',
+						'GTEST_USE_OWN_TR1_TUPLE=1',
+					],
 				}],
 			],
 		}

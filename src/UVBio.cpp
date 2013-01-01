@@ -134,7 +134,7 @@ int UVBioState::Write(BIO *b, const char *buf, int len) {
 	std::cerr << "UVBIO_Write " << len << std::endl;
 
 	uv_write_t *req = static_cast<uv_write_t *>(calloc(sizeof(*req), 1));
-	uv_buf_t uvbuf = { const_cast<char *>(buf), len };
+	uv_buf_t uvbuf = { const_cast<char *>(buf), static_cast<size_t>(len) };
 
 	int err = uv_write(req, stream, &uvbuf, 1, UVBioState::WriteCallback);
 	if (err != UV_OK) {
