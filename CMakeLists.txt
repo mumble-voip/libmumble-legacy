@@ -10,11 +10,24 @@ set(CMAKE_C_COMPILER "/usr/bin/clang")
 set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
 
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -fcolor-diagnostics -g -ggdb -O0")
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+endif()
+
+if (DEFINED SYSTEM_GTEST)
+	set(GTEST_INCLUDE_DIR /usr/include)
+	set(GTEST_SOURCE_DIR /usr/src/gtest/src)
+else()
+	set(GTEST_CHECKOUT ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/gtest)
+	set(GTEST_SOURCE_DIR ${GTEST_CHECKOUT}/src)
+	set(GTEST_INCLUDE_DIR ${GTEST_CHECKOUT}/include)
+endif()
 
 include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 	${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/libuv/include
-	/usr/src/gtest
+	${GTEST_INCLUDE_DIR}
+	${GTEST_SOURCE_DIR}
 )
 
 link_directories(
@@ -39,6 +52,6 @@ target_link_libraries(mumble-demo mumble uv pthread rt ssl crypto)
 
 file(GLOB TEST_SOURCES "src/*_test.cpp")
 add_executable(mumble-test
-	/usr/src/gtest/src/gtest-all.cc
+	${GTEST_SOURCE_DIR}/gtest-all.cc
 	${TEST_SOURCES})
 target_link_libraries(mumble-test mumble uv pthread rt ssl crypto)
