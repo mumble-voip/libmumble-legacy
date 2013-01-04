@@ -532,7 +532,7 @@ std::map<std::string, std::string> X509CertificatePrivate::ParseX509Name(X509_NA
 // Parse an ASN1 string representing time from an X509 PKIX certificate.
 std::time_t X509CertificatePrivate::ParseASN1Time(ASN1_TIME *time) {
 	struct tm tm;
-	char buf[20];
+	char buf[15];
 
 	// RFC 5280, 4.1.2.5.1 UTCTime
 	// For the purposes of this profile, UTCTime values MUST be expressed in
@@ -566,15 +566,18 @@ std::time_t X509CertificatePrivate::ParseASN1Time(ASN1_TIME *time) {
 		return 0;
 	}
 
-	buf[14] = '+';
-	buf[15] = '0';
-	buf[16] = '0';
-	buf[17] = '0';
-	buf[18] = '0';
-	buf[19] = 0;
+	// We used to append +0000 to the string at this point, but we dropped it.
+	// The reason is that the strptime function doesn't support the %z modifier
+	// on all systems, and on the systems that do support it, using it results
+	// in the returned struct tm being translated to the local system's timezone.
+	//
+	// Since a struct tm does not include time zone information, we can simply
+	// treat the result of parsing a timezone-less date string with strptime as
+	// being UTC, and use timegm to convert it to a Unix epoch timestamp.
+	buf[14] = 0;
 
 	memset(&tm, 0, sizeof(tm));
-	if (strptime(buf, "%Y%m%d%H%M%S%z", &tm) == nullptr) {
+	if (strptime(buf, "%Y%m%d%H%M%S", &tm) == nullptr) {
 		std::cerr << "X509CertificatePrivate: Invalid ASN.1 date for PKIX purposes encountered." << std::endl;
 		return 0;
 	}
