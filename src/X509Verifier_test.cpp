@@ -133,3 +133,9 @@ TEST(X509Verifier, TestSelfSignedServerCert) {
 	// let this one pass, triggering an actual X509 verification.
 	EXPECT_FALSE(verifier.VerifyChain(chain, opts));
 }
+
+TEST(X509Verifier, TestEmptyChain) {
+	mumble::X509Verifier &verifier = mumble::X509Verifier::SystemVerifier();
+	mumble::X509VerifierOptions opts;
+	EXPECT_FALSE(verifier.VerifyChain(std::vector<mumble::X509Certificate>(), opts));
+}

@@ -9,6 +9,11 @@
 			'product_name': 'mumble',
 			'type':         'static_library',
 			'cflags_cc':    ['-std=c++11'],
+			'dependencies': [
+				'3rdparty/libuv/uv.gyp:libuv',
+				'3rdparty/opensslbuild/OpenSSL.gyp:libcrypto',
+				'3rdparty/opensslbuild/OpenSSL.gyp:libssl',
+			],
 			'include_dirs': [
 				'include',
 				'src',
@@ -31,6 +36,19 @@
 						'CLANG_CXX_LANGUAGE_STANDARD': 'c++0x',
 						'CLANG_CXX_LIBRARY': 'libc++',
 					},
+					'link_settings': {
+						'libraries': [
+							'$(SDKROOT)/System/Library/Frameworks/Foundation.framework',
+							'$(SDKROOT)/System/Library/Frameworks/Security.framework',
+							'$(SDKROOT)/System/Library/Frameworks/CoreFoundation.framework',
+						],
+					},
+					'sources!': [
+						'src/X509Verifier_openssl.cpp',
+					],
+					'sources': [
+						'src/X509Verifier_mac.mm',
+					],
 				}],
 			],
 		},
@@ -41,9 +59,6 @@
 			'cflags_cc':     ['-std=c++11'],
 			'dependencies':  [
 				'libmumble',
-				'3rdparty/libuv/uv.gyp:libuv',
-				'3rdparty/opensslbuild/OpenSSL.gyp:libcrypto',
-				'3rdparty/opensslbuild/OpenSSL.gyp:libssl',
 			],
 			'include_dirs': [
 				'include',
