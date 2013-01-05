@@ -5,9 +5,58 @@
 {
 	'targets': [
 		{
+			'target_name':  'generate-gnuas-x86_64-assembly',
+			'type':         'none',
+			'actions': [
+				{
+					'action_name': 'genasm',
+					'inputs': [
+						'../openssl/crypto/x86_64cpuid.pl',
+						'../openssl/crypto/aes/asm/aes-x86_64.pl',
+						'../openssl/crypto/sha/asm/sha1-x86_64.pl',
+						'../openssl/crypto/sha/asm/sha512-x86_64.pl',
+						'../openssl/crypto/camellia/asm/cmll-x86_64.pl',
+						'../openssl/crypto/md5/asm/md5-x86_64.pl',
+						'../openssl/crypto/whrlpool/asm/wp-x86_64.pl',
+						'../openssl/crypto/rc4/asm/rc4-x86_64.pl',
+						'../openssl/crypto/bn/asm/x86_64-mont.pl',
+					],
+					'outputs': [
+						'asm/gnuas/crypto/x86_64cpuid.S',
+						'asm/gnuas/crypto/aes/asm/aes-x86_64.S',
+						'asm/gnuas/crypto/sha/asm/sha1-x86_64.S',
+						'asm/gnuas/crypto/sha/asm/sha256-x86_64.S',
+						'asm/gnuas/crypto/sha/asm/sha512-x86_64.S',
+						'asm/gnuas/crypto/camellia/asm/cmll-x86_64.S',
+						'asm/gnuas/crypto/md5/asm/md5-x86_64.S',
+						'asm/gnuas/crypto/whrlpool/asm/wp-x86_64.S',
+						'asm/gnuas/crypto/rc4/asm/rc4-x86_64.S',
+						'asm/gnuas/crypto/bn/asm/x86_64-mont.S',
+					],
+					'action': [ './genasm-gnuas-x86_64.bash' ],
+				},
+			],
+		},
+		{
+			'target_name':  'generate-x86_64-opensslconf',
+			'type':         'none',
+			'actions': [
+				{
+					'action_name': 'genconf',
+					'inputs': [
+						'opensslconf-x86_64.h',
+					],
+					'outputs': [
+						'../openssl/crypto/opensslconf.h',
+					],
+					'action': [ './genconf.bash', '<@(_inputs)', ],
+				},
+			],
+		},
+		{
 			'target_name':  'libcrypto',
 			'product_name': 'crypto',
-			'type':         'static_library',
+			'type':         '<(library)',
 			'include_dirs': [
 				'../openssl',
 				'../openssl/include',
@@ -19,6 +68,11 @@
 				'NO_WINDOWS_BRAINDEATH=1',
 				'OPENSSL_NO_INLINE_ASM=1',
 				'OPENSSL_NO_ASM=1',
+				'OPENSSL_NO_HW=1',
+				'OPENSSL_NO_GOST=1',
+				'OPENSSL_NO_GMP=1',
+				'OPENSSL_THREADS=1',
+				'_REENTRANT=1',
 			],
 			'sources': [
 				# aes
@@ -677,18 +731,86 @@
 				'../openssl/crypto/x509v3/v3err.c',
 			],
 			'conditions': [
-				['OS=="mac"', {
-					'xcode_settings': {
-						'CLANG_CXX_LANGUAGE_STANDARD': 'c++0x',
-						'CLANG_CXX_LIBRARY': 'libc++',
-					},
+				['"<(library)" == "shared_library"', {
+					'cflags': [ '-fPIC' ],
+					'ldflags': [ '-Wl,-Bsymbolic' ],
+				}],
+				['openssl_asm=="gnuas-x86_64"', {
+					'dependencies': [
+						'generate-x86_64-opensslconf',
+						'generate-gnuas-x86_64-assembly',
+					],
+					'defines': [
+						'OPENSSL_CPUID_OBJ=1',
+						'L_ENDIAN',
+						'MD32_REG_T=int',
+				 		'OPENSSL_IA32_SSE2=1',
+				 		'OPENSSL_BN_ASM_MONT=1',
+				 		'SHA1_ASM=1',
+				 		'SHA256_ASM=1',
+				 		'SHA512_ASM=1',
+				 		'MD5_ASM=1',
+				 		'AES_ASM=1',
+				 		'WHIRLPOOL_ASM=1',
+					],
+					'defines!': [
+						'OPENSSL_NO_ASM=1',
+					],
+					'sources': [
+						'asm/gnuas/crypto/x86_64cpuid.S',
+
+						# aes
+						'asm/gnuas/crypto/aes/asm/aes-x86_64.S',
+
+						# sha
+						'asm/gnuas/crypto/sha/asm/sha1-x86_64.S',
+						'asm/gnuas/crypto/sha/asm/sha256-x86_64.S',
+						'asm/gnuas/crypto/sha/asm/sha512-x86_64.S',
+
+						# camellia
+						'asm/gnuas/crypto/camellia/asm/cmll-x86_64.S',
+
+						# md5
+						'asm/gnuas/crypto/md5/asm/md5-x86_64.S',
+
+						# whirlpool
+						'asm/gnuas/crypto/whrlpool/asm/wp-x86_64.S',
+
+						# rc4
+						'asm/gnuas/crypto/rc4/asm/rc4-x86_64.S',
+
+						# bignum
+						'../openssl/crypto/bn/asm/x86_64-gcc.c',
+						'asm/gnuas/crypto/bn/asm/x86_64-mont.S',
+					],
+					'sources!': [
+						'../openssl/crypto/mem_clr.c',
+
+						# aes
+						'../openssl/crypto/aes/aes_core.c',
+						'../openssl/crypto/aes/aes_cbc.c',
+
+						# camellia
+						'../openssl/crypto/camellia/camellia.c',
+						'../openssl/crypto/camellia/cmll_cbc.c',
+
+						# whirlpool
+						'../openssl/crypto/whrlpool/wp_block.c',
+
+						# rc4
+						'../openssl/crypto/rc4/rc4_enc.c',
+						'../openssl/crypto/rc4/rc4_skey.c',
+
+						# bignum
+						'../openssl/crypto/bn/bn_asm.c',
+					],
 				}],
 			],
 		},
 		{
 			'target_name':  'libssl',
 			'product_name': 'ssl',
-			'type':         'static_library',
+			'type':         '<(library)',
 			'include_dirs': [
 				'../openssl',
 				'../openssl/include',
@@ -700,6 +822,11 @@
 				'NO_WINDOWS_BRAINDEATH=1',
 				'OPENSSL_NO_INLINE_ASM=1',
 				'OPENSSL_NO_ASM=1',
+				'OPENSSL_NO_HW=1',
+				'OPENSSL_NO_GOST=1',
+				'OPENSSL_NO_GMP=1',
+				'OPENSSL_THREADS=1',
+				'_REENTRANT=1',
 			],
 			'sources': [
 				'../openssl/ssl/bio_ssl.c',
@@ -746,7 +873,18 @@
 				'../openssl/ssl/t1_meth.c',
 				'../openssl/ssl/t1_reneg.c',
 				'../openssl/ssl/t1_srvr.c',
-			]
+			],
+			'conditions': [
+				['"<(library)" == "shared_library"', {
+					'cflags': [ '-fPIC' ],
+					'ldflags': [ '-Wl,-Bsymbolic' ],
+				}],
+				['openssl_asm=="gnuas-x86_64"', {
+					'dependencies': [
+						'generate-x86_64-opensslconf',
+					],
+				}],
+			],
 		},
 	],
 }

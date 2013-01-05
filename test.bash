@@ -14,19 +14,19 @@
 # system).
 
 function xcode_build {
-	gyp libmumble.gyp -f xcode --depth . -Dlibrary=static_library --generator-out=test
+	gyp libmumble.gyp -f xcode --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
 	xcodebuild -project test/libmumble.xcodeproj/ -target libmumble-test -configuration Default CONFIGURATION_BUILD_DIR=test/build
 	./test/build/libmumble-test
 }
 
 function ninja_build {
-	gyp libmumble.gyp -f ninja --depth . -Dlibrary=static_library --generator-out=test
+	gyp libmumble.gyp -f ninja --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
 	ninja -C test/out/Default
 	./test/out/Default/libmumble-test
 }
 
 function make_build {
-	gyp libmumble.gyp -f make --depth . -Dlibrary=static_library --generator-out=test
+	gyp libmumble.gyp -f make --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
 	make -C test/
 	./test/out/Default/libmumble-test
 }
