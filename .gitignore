@@ -7,3 +7,5 @@ libmumble.a
 mumble-test
 mumble-demo
 rules.ninja
+3rdparty/opensslbuild/asm
+test/

@@ -5,7 +5,6 @@
 
 trap exit SIGINT SIGTERM
 
-mkdir -p asm/gnuas/crypto
 mkdir -p asm/gnuas/crypto/aes/asm
 mkdir -p asm/gnuas/crypto/sha/asm
 mkdir -p asm/gnuas/crypto/camellia/asm

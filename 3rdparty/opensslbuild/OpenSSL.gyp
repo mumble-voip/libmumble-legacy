@@ -3,56 +3,126 @@
 # license that can be found in the LICENSE-file.
 
 {
+	'conditions': [
+		['openssl_asm=="gnuas-x86_64"', {
+			'targets': [
+				{
+					'target_name':  'generate-gnuas-x86_64-assembly',
+					'type':         'none',
+					'actions': [
+						{
+							'action_name': 'genasm',
+							'inputs': [
+								'../openssl/crypto/x86_64cpuid.pl',
+								'../openssl/crypto/aes/asm/aes-x86_64.pl',
+								'../openssl/crypto/sha/asm/sha1-x86_64.pl',
+								'../openssl/crypto/sha/asm/sha512-x86_64.pl',
+								'../openssl/crypto/camellia/asm/cmll-x86_64.pl',
+								'../openssl/crypto/md5/asm/md5-x86_64.pl',
+								'../openssl/crypto/whrlpool/asm/wp-x86_64.pl',
+								'../openssl/crypto/rc4/asm/rc4-x86_64.pl',
+								'../openssl/crypto/bn/asm/x86_64-mont.pl',
+							],
+							'outputs': [
+								'asm/gnuas/crypto/x86_64cpuid.S',
+								'asm/gnuas/crypto/aes/asm/aes-x86_64.S',
+								'asm/gnuas/crypto/sha/asm/sha1-x86_64.S',
+								'asm/gnuas/crypto/sha/asm/sha256-x86_64.S',
+								'asm/gnuas/crypto/sha/asm/sha512-x86_64.S',
+								'asm/gnuas/crypto/camellia/asm/cmll-x86_64.S',
+								'asm/gnuas/crypto/md5/asm/md5-x86_64.S',
+								'asm/gnuas/crypto/whrlpool/asm/wp-x86_64.S',
+								'asm/gnuas/crypto/rc4/asm/rc4-x86_64.S',
+								'asm/gnuas/crypto/bn/asm/x86_64-mont.S',
+							],
+							'action': [ './genasm-gnuas-x86_64.bash' ],
+						},
+					],
+				},
+				{
+					'target_name':  'generate-x86_64-opensslconf',
+					'type': 	        'none',
+					'actions': [
+						{
+							'action_name': 'genconf',
+							'inputs': [
+								'opensslconf-x86_64.h',
+							],
+							'outputs': [
+								'../openssl/crypto/opensslconf.h',
+							],
+							'action': [ './genconf.bash', '<@(_inputs)', ],
+						},
+					],
+				},
+			]
+		}],
+		['openssl_asm=="gnuas-x86"', {
+			'targets': [
+				{
+					'target_name':  'generate-gnuas-x86-assembly',
+					'type':         'none',
+					'actions': [
+						{
+							'action_name': 'genasm',
+							'inputs': [
+								'../openssl/crypto/x86cpuid.pl',
+								'../openssl/crypto/aes/asm/aes-586.pl',
+								'../openssl/crypto/cast/asm/cast-586.pl',
+								'../openssl/crypto/sha/asm/sha1-586.pl',
+								'../openssl/crypto/sha/asm/sha256-586.pl',
+								'../openssl/crypto/sha/asm/sha512-586.pl',
+								'../openssl/crypto/md5/asm/md5-586.pl',
+								'../openssl/crypto/ripemd/asm/rmd-586.pl',
+								'../openssl/crypto/bf/asm/bf-586.pl',
+								'../openssl/crypto/des/asm/des-586.pl',
+								'../openssl/crypto/des/asm/crypt586.pl',
+								'../openssl/crypto/rc4/asm/rc4-586.pl',
+								'../openssl/crypto/bn/asm/bn-586.pl',
+								'../openssl/crypto/bn/asm/co-586.pl',
+								'../openssl/crypto/bn/asm/x86-mont.pl',
+							],
+							'outputs': [
+								'asm/gnuas/crypto/x86cpuid.S',
+								'asm/gnuas/crypto/bn/asm/aes-586.S',
+								'asm/gnuas/crypto/cast/asm/cast-586.S',
+								'asm/gnuas/crypto/sha/asm/sha1-586.S',
+								'asm/gnuas/crypto/sha/asm/sha256-586.S',
+								'asm/gnuas/crypto/sha/asm/sha512-586.S',
+								'asm/gnuas/crypto/md5/asm/md5-586.S',
+								'asm/gnuas/crypto/md5/asm/rmd-586.S',
+								'asm/gnuas/crypto/bf/asm/bf-586.S',
+								'asm/gnuas/crypto/des/asm/des-586.S',
+								'asm/gnuas/crypto/des/asm/crypt586.S',
+								'asm/gnuas/crypto/rc4/asm/rc4-586.S',
+								'asm/gnuas/crypto/bn/asm/bn-586.S',
+								'asm/gnuas/crypto/bn/asm/co-586.S',
+								'asm/gnuas/crypto/bn/asm/x86-mont.S',
+							],
+							'action': [ './genasm-gnuas-x86.bash' ],
+						},
+					],
+				},
+				{
+					'target_name':  'generate-x86-opensslconf',
+					'type':         'none',
+					'actions': [
+						{
+							'action_name': 'genconf',
+							'inputs': [
+								'opensslconf-x86.h',
+							],
+							'outputs': [
+								'../openssl/crypto/opensslconf.h',
+							],
+							'action': [ './genconf.bash', '<@(_inputs)', ],
+						},
+					],
+				},
+			],
+		}],
+	],
 	'targets': [
-		{
-			'target_name':  'generate-gnuas-x86_64-assembly',
-			'type':         'none',
-			'actions': [
-				{
-					'action_name': 'genasm',
-					'inputs': [
-						'../openssl/crypto/x86_64cpuid.pl',
-						'../openssl/crypto/aes/asm/aes-x86_64.pl',
-						'../openssl/crypto/sha/asm/sha1-x86_64.pl',
-						'../openssl/crypto/sha/asm/sha512-x86_64.pl',
-						'../openssl/crypto/camellia/asm/cmll-x86_64.pl',
-						'../openssl/crypto/md5/asm/md5-x86_64.pl',
-						'../openssl/crypto/whrlpool/asm/wp-x86_64.pl',
-						'../openssl/crypto/rc4/asm/rc4-x86_64.pl',
-						'../openssl/crypto/bn/asm/x86_64-mont.pl',
-					],
-					'outputs': [
-						'asm/gnuas/crypto/x86_64cpuid.S',
-						'asm/gnuas/crypto/aes/asm/aes-x86_64.S',
-						'asm/gnuas/crypto/sha/asm/sha1-x86_64.S',
-						'asm/gnuas/crypto/sha/asm/sha256-x86_64.S',
-						'asm/gnuas/crypto/sha/asm/sha512-x86_64.S',
-						'asm/gnuas/crypto/camellia/asm/cmll-x86_64.S',
-						'asm/gnuas/crypto/md5/asm/md5-x86_64.S',
-						'asm/gnuas/crypto/whrlpool/asm/wp-x86_64.S',
-						'asm/gnuas/crypto/rc4/asm/rc4-x86_64.S',
-						'asm/gnuas/crypto/bn/asm/x86_64-mont.S',
-					],
-					'action': [ './genasm-gnuas-x86_64.bash' ],
-				},
-			],
-		},
-		{
-			'target_name':  'generate-x86_64-opensslconf',
-			'type':         'none',
-			'actions': [
-				{
-					'action_name': 'genconf',
-					'inputs': [
-						'opensslconf-x86_64.h',
-					],
-					'outputs': [
-						'../openssl/crypto/opensslconf.h',
-					],
-					'action': [ './genconf.bash', '<@(_inputs)', ],
-				},
-			],
-		},
 		{
 			'target_name':  'libcrypto',
 			'product_name': 'crypto',
@@ -758,50 +828,78 @@
 					],
 					'sources': [
 						'asm/gnuas/crypto/x86_64cpuid.S',
-
-						# aes
 						'asm/gnuas/crypto/aes/asm/aes-x86_64.S',
-
-						# sha
 						'asm/gnuas/crypto/sha/asm/sha1-x86_64.S',
 						'asm/gnuas/crypto/sha/asm/sha256-x86_64.S',
 						'asm/gnuas/crypto/sha/asm/sha512-x86_64.S',
-
-						# camellia
 						'asm/gnuas/crypto/camellia/asm/cmll-x86_64.S',
-
-						# md5
 						'asm/gnuas/crypto/md5/asm/md5-x86_64.S',
-
-						# whirlpool
 						'asm/gnuas/crypto/whrlpool/asm/wp-x86_64.S',
-
-						# rc4
 						'asm/gnuas/crypto/rc4/asm/rc4-x86_64.S',
-
-						# bignum
 						'../openssl/crypto/bn/asm/x86_64-gcc.c',
 						'asm/gnuas/crypto/bn/asm/x86_64-mont.S',
 					],
 					'sources!': [
 						'../openssl/crypto/mem_clr.c',
-
-						# aes
 						'../openssl/crypto/aes/aes_core.c',
 						'../openssl/crypto/aes/aes_cbc.c',
-
-						# camellia
 						'../openssl/crypto/camellia/camellia.c',
 						'../openssl/crypto/camellia/cmll_cbc.c',
-
-						# whirlpool
 						'../openssl/crypto/whrlpool/wp_block.c',
-
-						# rc4
 						'../openssl/crypto/rc4/rc4_enc.c',
 						'../openssl/crypto/rc4/rc4_skey.c',
-
-						# bignum
+						'../openssl/crypto/bn/bn_asm.c',
+					],
+				}],
+				['openssl_asm=="gnuas-x86"', {
+					'dependencies': [
+						'generate-x86-opensslconf',
+						'generate-gnuas-x86-assembly',
+					],
+					'defines': [
+						'OPENSSL_CPUID_OBJ=1',
+						'L_ENDIAN',
+						'MD32_REG_T=int',
+						'OPENSSL_BN_ASM_PART_WORDS=1',
+				 		'OPENSSL_BN_ASM_MONT=1',
+				 		'SHA1_ASM=1',
+				 		'SHA256_ASM=1',
+				 		'SHA512_ASM=1',
+				 		'MD5_ASM=1',
+				 		'AES_ASM=1',
+					],
+					'defines!': [
+						'OPENSSL_NO_ASM=1',
+					],
+					'sources': [
+						'asm/gnuas/crypto/x86cpuid.S',
+						'asm/gnuas/crypto/bn/asm/aes-586.S',
+						'asm/gnuas/crypto/cast/asm/cast-586.S',
+						'asm/gnuas/crypto/sha/asm/sha1-586.S',
+						'asm/gnuas/crypto/sha/asm/sha256-586.S',
+						'asm/gnuas/crypto/sha/asm/sha512-586.S',
+						'asm/gnuas/crypto/md5/asm/md5-586.S',
+						'asm/gnuas/crypto/md5/asm/rmd-586.S',
+						'asm/gnuas/crypto/bf/asm/bf-586.S',
+						'asm/gnuas/crypto/des/asm/des-586.S',
+						'asm/gnuas/crypto/des/asm/crypt586.S',
+						'asm/gnuas/crypto/rc4/asm/rc4-586.S',
+						'asm/gnuas/crypto/bn/asm/bn-586.S',
+						'asm/gnuas/crypto/bn/asm/co-586.S',
+						'asm/gnuas/crypto/bn/asm/x86-mont.S',
+					],
+					'sources!': [
+						'../openssl/crypto/mem_clr.c',
+						'../openssl/crypto/aes/aes_core.c',
+						'../openssl/crypto/aes/aes_cbc.c',
+						'../openssl/crypto/cast/c_enc.c',
+						'../openssl/crypto/bf/bf_cbc.c',
+						'../openssl/crypto/bf/bf_enc.c',
+						'../openssl/crypto/des/des_enc.c',
+						'../openssl/crypto/des/ncbc_enc.c',
+						'../openssl/crypto/des/fcrypt_b.c',
+						'../openssl/crypto/rc4/rc4_enc.c',
+						'../openssl/crypto/rc4/rc4_skey.c',
 						'../openssl/crypto/bn/bn_asm.c',
 					],
 				}],
@@ -882,6 +980,11 @@
 				['openssl_asm=="gnuas-x86_64"', {
 					'dependencies': [
 						'generate-x86_64-opensslconf',
+					],
+				}],
+				['openssl_asm=="gnuas-x86"', {
+					'dependencies': [
+						'generate-x86-opensslconf',
 					],
 				}],
 			],
