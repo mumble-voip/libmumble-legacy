@@ -34,6 +34,12 @@ function make_build {
 }
 
 function android_build {
+	# Ensure the needed auto-geneated OpenSSL files are present.
+	cd 3rdparty/opensslbuild
+	./genconf.bash opensslconf-dist.h
+	./genlinks.bash
+	cd ../..
+
 	./build/android/generate.bash
 	# Ensure the generated Android.mk has the same timestamp
 	# as our libmumble.gyp file. This is a simplistic remedy
@@ -43,6 +49,7 @@ function android_build {
 	# to a project without touching the libmumble.gyp file,
 	# but who knows.
 	touch -r libmumble.gyp ./build/android/jni/Android.mk
+
 	cd ./build/android/jni
 	ndk-build
 	adb shell mkdir -p /sdcard/libmumble

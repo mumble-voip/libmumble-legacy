@@ -25,7 +25,7 @@ echo "cd ../openssl/include/openssl" >> genlinks.bash
 
 for fn in $(ls ../openssl/include/openssl); do
 	dst=$(readlink ../openssl/include/openssl/${fn})
-	echo "ln -sf ${dst} ${fn}" >> genlinks.bash
+	echo "ln -s ${dst} ${fn} 2>/dev/null" >> genlinks.bash
 done
 
 cd ../openssl

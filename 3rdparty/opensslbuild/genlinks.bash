@@ -2,75 +2,75 @@
 
 mkdir -p ../openssl/include/openssl
 cd ../openssl/include/openssl
-ln -sf ../../crypto/aes/aes.h aes.h
-ln -sf ../../crypto/asn1/asn1.h asn1.h
-ln -sf ../../crypto/asn1/asn1_mac.h asn1_mac.h
-ln -sf ../../crypto/asn1/asn1t.h asn1t.h
-ln -sf ../../crypto/bio/bio.h bio.h
-ln -sf ../../crypto/bf/blowfish.h blowfish.h
-ln -sf ../../crypto/bn/bn.h bn.h
-ln -sf ../../crypto/buffer/buffer.h buffer.h
-ln -sf ../../crypto/camellia/camellia.h camellia.h
-ln -sf ../../crypto/cast/cast.h cast.h
-ln -sf ../../crypto/cms/cms.h cms.h
-ln -sf ../../crypto/comp/comp.h comp.h
-ln -sf ../../crypto/conf/conf.h conf.h
-ln -sf ../../crypto/conf/conf_api.h conf_api.h
-ln -sf ../../crypto/crypto.h crypto.h
-ln -sf ../../crypto/des/des.h des.h
-ln -sf ../../crypto/des/des_old.h des_old.h
-ln -sf ../../crypto/dh/dh.h dh.h
-ln -sf ../../crypto/dsa/dsa.h dsa.h
-ln -sf ../../crypto/dso/dso.h dso.h
-ln -sf ../../ssl/dtls1.h dtls1.h
-ln -sf ../../e_os2.h e_os2.h
-ln -sf ../../crypto/ebcdic.h ebcdic.h
-ln -sf ../../crypto/ec/ec.h ec.h
-ln -sf ../../crypto/ecdh/ecdh.h ecdh.h
-ln -sf ../../crypto/ecdsa/ecdsa.h ecdsa.h
-ln -sf ../../crypto/engine/engine.h engine.h
-ln -sf ../../crypto/err/err.h err.h
-ln -sf ../../crypto/evp/evp.h evp.h
-ln -sf ../../crypto/hmac/hmac.h hmac.h
-ln -sf ../../crypto/idea/idea.h idea.h
-ln -sf ../../crypto/krb5/krb5_asn.h krb5_asn.h
-ln -sf ../../ssl/kssl.h kssl.h
-ln -sf ../../crypto/lhash/lhash.h lhash.h
-ln -sf ../../crypto/md4/md4.h md4.h
-ln -sf ../../crypto/md5/md5.h md5.h
-ln -sf ../../crypto/mdc2/mdc2.h mdc2.h
-ln -sf ../../crypto/modes/modes.h modes.h
-ln -sf ../../crypto/objects/obj_mac.h obj_mac.h
-ln -sf ../../crypto/objects/objects.h objects.h
-ln -sf ../../crypto/ocsp/ocsp.h ocsp.h
-ln -sf ../../crypto/opensslconf.h opensslconf.h
-ln -sf ../../crypto/opensslv.h opensslv.h
-ln -sf ../../crypto/ossl_typ.h ossl_typ.h
-ln -sf ../../crypto/pem/pem.h pem.h
-ln -sf ../../crypto/pem/pem2.h pem2.h
-ln -sf ../../crypto/pkcs12/pkcs12.h pkcs12.h
-ln -sf ../../crypto/pkcs7/pkcs7.h pkcs7.h
-ln -sf ../../crypto/pqueue/pqueue.h pqueue.h
-ln -sf ../../crypto/rand/rand.h rand.h
-ln -sf ../../crypto/rc2/rc2.h rc2.h
-ln -sf ../../crypto/rc4/rc4.h rc4.h
-ln -sf ../../crypto/ripemd/ripemd.h ripemd.h
-ln -sf ../../crypto/rsa/rsa.h rsa.h
-ln -sf ../../crypto/stack/safestack.h safestack.h
-ln -sf ../../crypto/seed/seed.h seed.h
-ln -sf ../../crypto/sha/sha.h sha.h
-ln -sf ../../ssl/ssl.h ssl.h
-ln -sf ../../ssl/ssl2.h ssl2.h
-ln -sf ../../ssl/ssl23.h ssl23.h
-ln -sf ../../ssl/ssl3.h ssl3.h
-ln -sf ../../crypto/stack/stack.h stack.h
-ln -sf ../../crypto/symhacks.h symhacks.h
-ln -sf ../../ssl/tls1.h tls1.h
-ln -sf ../../crypto/ts/ts.h ts.h
-ln -sf ../../crypto/txt_db/txt_db.h txt_db.h
-ln -sf ../../crypto/ui/ui.h ui.h
-ln -sf ../../crypto/ui/ui_compat.h ui_compat.h
-ln -sf ../../crypto/whrlpool/whrlpool.h whrlpool.h
-ln -sf ../../crypto/x509/x509.h x509.h
-ln -sf ../../crypto/x509/x509_vfy.h x509_vfy.h
-ln -sf ../../crypto/x509v3/x509v3.h x509v3.h
+ln -s ../../crypto/aes/aes.h aes.h 2>/dev/null
+ln -s ../../crypto/asn1/asn1.h asn1.h 2>/dev/null
+ln -s ../../crypto/asn1/asn1_mac.h asn1_mac.h 2>/dev/null
+ln -s ../../crypto/asn1/asn1t.h asn1t.h 2>/dev/null
+ln -s ../../crypto/bio/bio.h bio.h 2>/dev/null
+ln -s ../../crypto/bf/blowfish.h blowfish.h 2>/dev/null
+ln -s ../../crypto/bn/bn.h bn.h 2>/dev/null
+ln -s ../../crypto/buffer/buffer.h buffer.h 2>/dev/null
+ln -s ../../crypto/camellia/camellia.h camellia.h 2>/dev/null
+ln -s ../../crypto/cast/cast.h cast.h 2>/dev/null
+ln -s ../../crypto/cms/cms.h cms.h 2>/dev/null
+ln -s ../../crypto/comp/comp.h comp.h 2>/dev/null
+ln -s ../../crypto/conf/conf.h conf.h 2>/dev/null
+ln -s ../../crypto/conf/conf_api.h conf_api.h 2>/dev/null
+ln -s ../../crypto/crypto.h crypto.h 2>/dev/null
+ln -s ../../crypto/des/des.h des.h 2>/dev/null
+ln -s ../../crypto/des/des_old.h des_old.h 2>/dev/null
+ln -s ../../crypto/dh/dh.h dh.h 2>/dev/null
+ln -s ../../crypto/dsa/dsa.h dsa.h 2>/dev/null
+ln -s ../../crypto/dso/dso.h dso.h 2>/dev/null
+ln -s ../../ssl/dtls1.h dtls1.h 2>/dev/null
+ln -s ../../e_os2.h e_os2.h 2>/dev/null
+ln -s ../../crypto/ebcdic.h ebcdic.h 2>/dev/null
+ln -s ../../crypto/ec/ec.h ec.h 2>/dev/null
+ln -s ../../crypto/ecdh/ecdh.h ecdh.h 2>/dev/null
+ln -s ../../crypto/ecdsa/ecdsa.h ecdsa.h 2>/dev/null
+ln -s ../../crypto/engine/engine.h engine.h 2>/dev/null
+ln -s ../../crypto/err/err.h err.h 2>/dev/null
+ln -s ../../crypto/evp/evp.h evp.h 2>/dev/null
+ln -s ../../crypto/hmac/hmac.h hmac.h 2>/dev/null
+ln -s ../../crypto/idea/idea.h idea.h 2>/dev/null
+ln -s ../../crypto/krb5/krb5_asn.h krb5_asn.h 2>/dev/null
+ln -s ../../ssl/kssl.h kssl.h 2>/dev/null
+ln -s ../../crypto/lhash/lhash.h lhash.h 2>/dev/null
+ln -s ../../crypto/md4/md4.h md4.h 2>/dev/null
+ln -s ../../crypto/md5/md5.h md5.h 2>/dev/null
+ln -s ../../crypto/mdc2/mdc2.h mdc2.h 2>/dev/null
+ln -s ../../crypto/modes/modes.h modes.h 2>/dev/null
+ln -s ../../crypto/objects/obj_mac.h obj_mac.h 2>/dev/null
+ln -s ../../crypto/objects/objects.h objects.h 2>/dev/null
+ln -s ../../crypto/ocsp/ocsp.h ocsp.h 2>/dev/null
+ln -s ../../crypto/opensslconf.h opensslconf.h 2>/dev/null
+ln -s ../../crypto/opensslv.h opensslv.h 2>/dev/null
+ln -s ../../crypto/ossl_typ.h ossl_typ.h 2>/dev/null
+ln -s ../../crypto/pem/pem.h pem.h 2>/dev/null
+ln -s ../../crypto/pem/pem2.h pem2.h 2>/dev/null
+ln -s ../../crypto/pkcs12/pkcs12.h pkcs12.h 2>/dev/null
+ln -s ../../crypto/pkcs7/pkcs7.h pkcs7.h 2>/dev/null
+ln -s ../../crypto/pqueue/pqueue.h pqueue.h 2>/dev/null
+ln -s ../../crypto/rand/rand.h rand.h 2>/dev/null
+ln -s ../../crypto/rc2/rc2.h rc2.h 2>/dev/null
+ln -s ../../crypto/rc4/rc4.h rc4.h 2>/dev/null
+ln -s ../../crypto/ripemd/ripemd.h ripemd.h 2>/dev/null
+ln -s ../../crypto/rsa/rsa.h rsa.h 2>/dev/null
+ln -s ../../crypto/stack/safestack.h safestack.h 2>/dev/null
+ln -s ../../crypto/seed/seed.h seed.h 2>/dev/null
+ln -s ../../crypto/sha/sha.h sha.h 2>/dev/null
+ln -s ../../ssl/ssl.h ssl.h 2>/dev/null
+ln -s ../../ssl/ssl2.h ssl2.h 2>/dev/null
+ln -s ../../ssl/ssl23.h ssl23.h 2>/dev/null
+ln -s ../../ssl/ssl3.h ssl3.h 2>/dev/null
+ln -s ../../crypto/stack/stack.h stack.h 2>/dev/null
+ln -s ../../crypto/symhacks.h symhacks.h 2>/dev/null
+ln -s ../../ssl/tls1.h tls1.h 2>/dev/null
+ln -s ../../crypto/ts/ts.h ts.h 2>/dev/null
+ln -s ../../crypto/txt_db/txt_db.h txt_db.h 2>/dev/null
+ln -s ../../crypto/ui/ui.h ui.h 2>/dev/null
+ln -s ../../crypto/ui/ui_compat.h ui_compat.h 2>/dev/null
+ln -s ../../crypto/whrlpool/whrlpool.h whrlpool.h 2>/dev/null
+ln -s ../../crypto/x509/x509.h x509.h 2>/dev/null
+ln -s ../../crypto/x509/x509_vfy.h x509_vfy.h 2>/dev/null
+ln -s ../../crypto/x509v3/x509v3.h x509v3.h 2>/dev/null

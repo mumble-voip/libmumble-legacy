@@ -5,4 +5,5 @@
 
 trap exit SIGINT SIGTERM
 
-cat $* > ../openssl/crypto/opensslconf.h
+cat ${1} > ../openssl/crypto/opensslconf.h
+touch -r ${1} ../openssl/crypto/opensslconf.h 
