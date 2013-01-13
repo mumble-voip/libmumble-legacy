@@ -5,6 +5,8 @@
 
 # This script generates the canonical versions of opensslconf.h
 # for the architectures we support in 3rdparty/openssl.
+# The script is destructive, and will wipe any changes in your
+# 3rdparty/openssl submodule, so run with care.
 
 # Notes:
 # We strip OPENSSL_CPUID_OBJ and define it in the gyp file instead.
@@ -21,14 +23,30 @@ function writehdr {
 	echo >> ${out}
 }
 
+# dist (generic)
+git clean -dfx
+git reset --hard
+./Configure dist
+writehdr "./Configure dist" ../opensslbuild/opensslconf-dist.h
+tail -n+4 crypto/opensslconf.h >> ../opensslbuild/opensslconf-dist.h
+
 # x86_32
-git checkout crypto/opensslconf.h
+git clean -dfx
+git reset --hard
+rm crypto/opensslconf.h
 ./Configure linux-elf
 writehdr "./Configure linux-elf" ../opensslbuild/opensslconf-x86.h
 tail -n+4 crypto/opensslconf.h | sed 's,#define OPENSSL_CPUID_OBJ,,' >> ../opensslbuild/opensslconf-x86.h
 
 # x86_64
-git checkout crypto/opensslconf.h
+git clean -dfx
+git reset --hard
+rm crypto/opensslconf.h
 ./Configure linux-x86_64
 writehdr "./Configure linux-x86_64" ../opensslbuild/opensslconf-x86_64.h
 tail -n+4 crypto/opensslconf.h | sed 's,#define OPENSSL_CPUID_OBJ,,' >> ../opensslbuild/opensslconf-x86_64.h
+
+# final cleanup
+git clean -dfx
+git reset --hard
+

@@ -5,5 +5,4 @@
 
 trap exit SIGINT SIGTERM
 
-unlink ../openssl/crypto/opensslconf.h
 cat $* > ../openssl/crypto/opensslconf.h

@@ -13,7 +13,7 @@
 # ninja or make (if ninja is not available on the
 # system).
 
-GYP=./3rdparty/gyp/gyp
+GYP=./gyp
 
 function xcode_build {
 	${GYP} libmumble.gyp -f xcode --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test

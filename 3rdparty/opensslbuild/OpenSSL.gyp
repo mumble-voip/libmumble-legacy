@@ -41,7 +41,7 @@
 				},
 				{
 					'target_name':  'generate-x86_64-opensslconf',
-					'type': 	        'none',
+					'type': 	    'none',
 					'actions': [
 						{
 							'action_name': 'genconf',
@@ -124,9 +124,42 @@
 	],
 	'targets': [
 		{
+			'target_name':  'generate-header-symlinks',
+			'type':         'none',
+			'actions': [
+				{
+					'action_name': 'genlinks',
+					'inputs': [],
+					'outputs': ['../3rdparty/openssl/include/openssl'],
+					'action': [ './genlinks.bash' ],
+				},
+			],
+		},
+		{
+			'target_name':  'generate-generic-opensslconf',
+			'type':         'none',
+			'actions': [
+				{
+					'action_name': 'genconf',
+					'inputs': [
+						'opensslconf-dist.h',
+					],
+					'outputs': [
+						'../openssl/crypto/opensslconf.h',
+					],
+					'action': [ './genconf.bash', '<@(_inputs)', ],
+				},
+			],
+		},
+		{
 			'target_name':  'libcrypto',
 			'product_name': 'crypto',
 			'type':         '<(library)',
+			'hard_dependency': 1,
+			'dependencies': [
+				'generate-header-symlinks',
+				'generate-generic-opensslconf',
+			],
 			'link_settings': {
 				'libraries': [
 					'-lz',
@@ -151,7 +184,6 @@
 				'ZLIB=1',
 			],
 			'sources': [
-				# aes
 				'../openssl/crypto/aes/aes_cbc.c',
 				'../openssl/crypto/aes/aes_cfb.c',
 				'../openssl/crypto/aes/aes_core.c',
@@ -162,7 +194,6 @@
 				'../openssl/crypto/aes/aes_ofb.c',
 				'../openssl/crypto/aes/aes_wrap.c',
 
-				# asn1
 				'../openssl/crypto/asn1/a_bitstr.c',
 				'../openssl/crypto/asn1/a_bool.c',
 				'../openssl/crypto/asn1/a_bytes.c',
@@ -240,14 +271,12 @@
 				'../openssl/crypto/asn1/x_x509.c',
 				'../openssl/crypto/asn1/x_x509a.c',
 
-				# blowfish
 				'../openssl/crypto/bf/bf_cfb64.c',
 				'../openssl/crypto/bf/bf_ecb.c',
 				'../openssl/crypto/bf/bf_enc.c',
 				'../openssl/crypto/bf/bf_ofb64.c',
 				'../openssl/crypto/bf/bf_skey.c',
 
-				# bio
 				'../openssl/crypto/bio/b_dump.c',
 				'../openssl/crypto/bio/b_print.c',
 				'../openssl/crypto/bio/b_sock.c',
@@ -269,7 +298,6 @@
 				'../openssl/crypto/bio/bss_null.c',
 				'../openssl/crypto/bio/bss_sock.c',
 
-				# bignum
 				'../openssl/crypto/bn/bn_add.c',
 				'../openssl/crypto/bn/bn_asm.c',
 				'../openssl/crypto/bn/bn_blind.c',
@@ -298,11 +326,9 @@
 				'../openssl/crypto/bn/bn_sqrt.c',
 				'../openssl/crypto/bn/bn_word.c',
 
-				# buffer
 				'../openssl/crypto/buffer/buf_err.c',
 				'../openssl/crypto/buffer/buffer.c',
 
-				# camellia
 				'../openssl/crypto/camellia/camellia.c',
 				'../openssl/crypto/camellia/cmll_cbc.c',
 				'../openssl/crypto/camellia/cmll_cfb.c',
@@ -311,14 +337,12 @@
 				'../openssl/crypto/camellia/cmll_misc.c',
 				'../openssl/crypto/camellia/cmll_ofb.c',
 
-				# cast
 				'../openssl/crypto/cast/c_cfb64.c',
 				'../openssl/crypto/cast/c_ecb.c',
 				'../openssl/crypto/cast/c_enc.c',
 				'../openssl/crypto/cast/c_ofb64.c',
 				'../openssl/crypto/cast/c_skey.c',
 
-				# cms
 				'../openssl/crypto/cms/cms_asn1.c',
 				'../openssl/crypto/cms/cms_att.c',
 				'../openssl/crypto/cms/cms_cd.c',
@@ -332,13 +356,11 @@
 				'../openssl/crypto/cms/cms_sd.c',
 				'../openssl/crypto/cms/cms_smime.c',
 
-				# comp
 				'../openssl/crypto/comp/c_rle.c',
 				'../openssl/crypto/comp/c_zlib.c',
 				'../openssl/crypto/comp/comp_err.c',
 				'../openssl/crypto/comp/comp_lib.c',
 
-				# conf
 				'../openssl/crypto/conf/conf_api.c',
 				'../openssl/crypto/conf/conf_def.c',
 				'../openssl/crypto/conf/conf_err.c',
@@ -347,7 +369,6 @@
 				'../openssl/crypto/conf/conf_mod.c',
 				'../openssl/crypto/conf/conf_sap.c',
 
-				# crypto
 				'../openssl/crypto/cpt_err.c',
 				'../openssl/crypto/cryptlib.c',
 				'../openssl/crypto/cversion.c',
@@ -362,7 +383,6 @@
 				'../openssl/crypto/objects/o_names.c',
 				'../openssl/crypto/uid.c',
 
-				# des
 				'../openssl/crypto/des/cbc3_enc.c',
 				'../openssl/crypto/des/cbc_cksm.c',
 				'../openssl/crypto/des/cbc_enc.c',
@@ -391,7 +411,6 @@
 				'../openssl/crypto/des/str2key.c',
 				'../openssl/crypto/des/xcbc_enc.c',
 
-				# dh
 				'../openssl/crypto/dh/dh_ameth.c',
 				'../openssl/crypto/dh/dh_asn1.c',
 				'../openssl/crypto/dh/dh_check.c',
@@ -403,7 +422,6 @@
 				'../openssl/crypto/dh/dh_pmeth.c',
 				'../openssl/crypto/dh/dh_prn.c',
 
-				# dsa
 				'../openssl/crypto/dsa/dsa_ameth.c',
 				'../openssl/crypto/dsa/dsa_asn1.c',
 				'../openssl/crypto/dsa/dsa_depr.c',
@@ -417,7 +435,6 @@
 				'../openssl/crypto/dsa/dsa_sign.c',
 				'../openssl/crypto/dsa/dsa_vrf.c',
 
-				# dso
 				'../openssl/crypto/dso/dso_beos.c',
 				'../openssl/crypto/dso/dso_dl.c',
 				'../openssl/crypto/dso/dso_dlfcn.c',
@@ -428,7 +445,6 @@
 				'../openssl/crypto/dso/dso_vms.c',
 				'../openssl/crypto/dso/dso_win32.c',
 
-				# ec
 				'../openssl/crypto/ec/ec2_mult.c',
 				'../openssl/crypto/ec/ec2_smpl.c',
 				'../openssl/crypto/ec/ec_ameth.c',
@@ -447,13 +463,11 @@
 				'../openssl/crypto/ec/ecp_nist.c',
 				'../openssl/crypto/ec/ecp_smpl.c',
 
-				# ecdh
 				'../openssl/crypto/ecdh/ech_err.c',
 				'../openssl/crypto/ecdh/ech_key.c',
 				'../openssl/crypto/ecdh/ech_lib.c',
 				'../openssl/crypto/ecdh/ech_ossl.c',
 
-				# ecdsa
 				'../openssl/crypto/ecdsa/ecs_asn1.c',
 				'../openssl/crypto/ecdsa/ecs_err.c',
 				'../openssl/crypto/ecdsa/ecs_lib.c',
@@ -461,7 +475,6 @@
 				'../openssl/crypto/ecdsa/ecs_sign.c',
 				'../openssl/crypto/ecdsa/ecs_vrf.c',
 
-				# engine
 				'../openssl/crypto/engine/eng_all.c',
 				'../openssl/crypto/engine/eng_cnf.c',
 				'../openssl/crypto/engine/eng_cryptodev.c',
@@ -487,12 +500,10 @@
 				'../openssl/crypto/engine/tb_rsa.c',
 				'../openssl/crypto/engine/tb_store.c',
 
-				# err
 				'../openssl/crypto/err/err.c',
 				'../openssl/crypto/err/err_all.c',
 				'../openssl/crypto/err/err_prn.c',
 
-				# evp
 				'../openssl/crypto/evp/bio_b64.c',
 				'../openssl/crypto/evp/bio_enc.c',
 				'../openssl/crypto/evp/bio_md.c',
@@ -551,51 +562,41 @@
 				'../openssl/crypto/evp/pmeth_gn.c',
 				'../openssl/crypto/evp/pmeth_lib.c',
 
-				# hmac
 				'../openssl/crypto/hmac/hm_ameth.c',
 				'../openssl/crypto/hmac/hm_pmeth.c',
 				'../openssl/crypto/hmac/hmac.c',
 
-				# idea
 				'../openssl/crypto/idea/i_cbc.c',
 				'../openssl/crypto/idea/i_cfb64.c',
 				'../openssl/crypto/idea/i_ecb.c',
 				'../openssl/crypto/idea/i_ofb64.c',
 				'../openssl/crypto/idea/i_skey.c',
 
-				# krb5
 				'../openssl/crypto/krb5/krb5_asn.c',
 
-				# lhash
 				'../openssl/crypto/lhash/lh_stats.c',
 				'../openssl/crypto/lhash/lhash.c',
 
-				# md4
 				'../openssl/crypto/md4/md4_dgst.c',
 				'../openssl/crypto/md4/md4_one.c',
 
-				# md5
 				'../openssl/crypto/md5/md5_dgst.c',
 				'../openssl/crypto/md5/md5_one.c',
 
-				# mdc2
 				'../openssl/crypto/mdc2/mdc2_one.c',
 				'../openssl/crypto/mdc2/mdc2dgst.c',
 
-				# modes
 				'../openssl/crypto/modes/cbc128.c',
 				'../openssl/crypto/modes/cfb128.c',
 				'../openssl/crypto/modes/ctr128.c',
 				'../openssl/crypto/modes/cts128.c',
 				'../openssl/crypto/modes/ofb128.c',
 
-				# objects
 				'../openssl/crypto/objects/obj_dat.c',
 				'../openssl/crypto/objects/obj_err.c',
 				'../openssl/crypto/objects/obj_lib.c',
 				'../openssl/crypto/objects/obj_xref.c',
 
-				# ocsp
 				'../openssl/crypto/ocsp/ocsp_asn.c',
 				'../openssl/crypto/ocsp/ocsp_cl.c',
 				'../openssl/crypto/ocsp/ocsp_err.c',
@@ -606,7 +607,6 @@
 				'../openssl/crypto/ocsp/ocsp_srv.c',
 				'../openssl/crypto/ocsp/ocsp_vfy.c',
 
-				# pem
 				'../openssl/crypto/pem/pem_all.c',
 				'../openssl/crypto/pem/pem_err.c',
 				'../openssl/crypto/pem/pem_info.c',
@@ -620,7 +620,6 @@
 				'../openssl/crypto/pem/pem_xaux.c',
 				'../openssl/crypto/pem/pvkfmt.c',
 
-				# pkcs12
 				'../openssl/crypto/pkcs12/p12_add.c',
 				'../openssl/crypto/pkcs12/p12_asn.c',
 				'../openssl/crypto/pkcs12/p12_attr.c',
@@ -637,7 +636,6 @@
 				'../openssl/crypto/pkcs12/p12_utl.c',
 				'../openssl/crypto/pkcs12/pk12err.c',
 
-				# pkcs7
 				'../openssl/crypto/pkcs7/bio_pk7.c',
 				'../openssl/crypto/pkcs7/example.c',
 				'../openssl/crypto/pkcs7/pk7_asn1.c',
@@ -649,10 +647,8 @@
 				'../openssl/crypto/pkcs7/pk7_smime.c',
 				'../openssl/crypto/pkcs7/pkcs7err.c',
 
-				# pqueue
 				'../openssl/crypto/pqueue/pqueue.c',
 
-				# rand
 				'../openssl/crypto/rand/md_rand.c',
 				'../openssl/crypto/rand/rand_egd.c',
 				'../openssl/crypto/rand/rand_err.c',
@@ -660,22 +656,18 @@
 				'../openssl/crypto/rand/rand_unix.c',
 				'../openssl/crypto/rand/randfile.c',
 
-				# rc2
 				'../openssl/crypto/rc2/rc2_cbc.c',
 				'../openssl/crypto/rc2/rc2_ecb.c',
 				'../openssl/crypto/rc2/rc2_skey.c',
 				'../openssl/crypto/rc2/rc2cfb64.c',
 				'../openssl/crypto/rc2/rc2ofb64.c',
 
-				# rc4
 				'../openssl/crypto/rc4/rc4_enc.c',
 				'../openssl/crypto/rc4/rc4_skey.c',
 
-				# ripemd
 				'../openssl/crypto/ripemd/rmd_dgst.c',
 				'../openssl/crypto/ripemd/rmd_one.c',
 
-				# rsa
 				'../openssl/crypto/rsa/rsa_ameth.c',
 				'../openssl/crypto/rsa/rsa_asn1.c',
 				'../openssl/crypto/rsa/rsa_chk.c',
@@ -696,14 +688,12 @@
 				'../openssl/crypto/rsa/rsa_ssl.c',
 				'../openssl/crypto/rsa/rsa_x931.c',
 
-				# seed
 				'../openssl/crypto/seed/seed.c',
 				'../openssl/crypto/seed/seed_cbc.c',
 				'../openssl/crypto/seed/seed_cfb.c',
 				'../openssl/crypto/seed/seed_ecb.c',
 				'../openssl/crypto/seed/seed_ofb.c',
 
-				# sha*
 				'../openssl/crypto/sha/sha1_one.c',
 				'../openssl/crypto/sha/sha1dgst.c',
 				'../openssl/crypto/sha/sha256.c',
@@ -711,13 +701,10 @@
 				'../openssl/crypto/sha/sha_dgst.c',
 				'../openssl/crypto/sha/sha_one.c',
 
-				# stack
 				'../openssl/crypto/stack/stack.c',
 
-				# threads
 				'../openssl/crypto/threads/th-lock.c',
 
-				# ts
 				'../openssl/crypto/ts/ts_asn1.c',
 				'../openssl/crypto/ts/ts_conf.c',
 				'../openssl/crypto/ts/ts_err.c',
@@ -730,21 +717,17 @@
 				'../openssl/crypto/ts/ts_rsp_verify.c',
 				'../openssl/crypto/ts/ts_verify_ctx.c',
 
-				# txtdb
 				'../openssl/crypto/txt_db/txt_db.c',
 
-				# ui
 				'../openssl/crypto/ui/ui_compat.c',
 				'../openssl/crypto/ui/ui_err.c',
 				'../openssl/crypto/ui/ui_lib.c',
 				'../openssl/crypto/ui/ui_openssl.c',
 				'../openssl/crypto/ui/ui_util.c',
 
-				# whrlpool
 				'../openssl/crypto/whrlpool/wp_block.c',
 				'../openssl/crypto/whrlpool/wp_dgst.c',
 
-				# x509
 				'../openssl/crypto/x509/by_dir.c',
 				'../openssl/crypto/x509/by_file.c',
 				'../openssl/crypto/x509/x509_att.c',
@@ -828,6 +811,9 @@
 						'generate-x86_64-opensslconf',
 						'generate-gnuas-x86_64-assembly',
 					],
+					'dependencies!': [
+						'generate-generic-opensslconf',
+					],
 					'defines': [
 						'OPENSSL_CPUID_OBJ=1',
 						'L_ENDIAN',
@@ -873,6 +859,9 @@
 					'dependencies': [
 						'generate-x86-opensslconf',
 						'generate-gnuas-x86-assembly',
+					],
+					'dependencies!': [
+						'generate-generic-opensslconf',
 					],
 					'defines': [
 						'OPENSSL_CPUID_OBJ=1',
@@ -927,6 +916,11 @@
 			'target_name':  'libssl',
 			'product_name': 'ssl',
 			'type':         '<(library)',
+			'hard_dependency': 1,
+			'dependencies': [
+				'generate-header-symlinks',
+				'generate-generic-opensslconf',
+			],
 			'include_dirs': [
 				'../openssl',
 				'../openssl/include',
@@ -1000,10 +994,16 @@
 					'dependencies': [
 						'generate-x86_64-opensslconf',
 					],
+					'dependencies!': [
+						'generate-generic-opensslconf',
+					],
 				}],
 				['openssl_asm=="gnuas-x86"', {
 					'dependencies': [
 						'generate-x86-opensslconf',
+					],
+					'dependencies!': [
+						'generate-generic-opensslconf',
 					],
 				}],
 			],
