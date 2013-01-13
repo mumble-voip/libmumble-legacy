@@ -6,7 +6,7 @@
 	url = https://git.chromium.org/git/external/gtest.git
 [submodule "3rdparty/openssl"]
 	path = 3rdparty/openssl
-	url = git://github.com/mkrautz/openssl-mirror.git
+	url = git://openssl.net/openssl
 [submodule "3rdparty/gyp"]
 	path = 3rdparty/gyp
 	url = git://github.com/mkrautz/gyp-libmumble.git
