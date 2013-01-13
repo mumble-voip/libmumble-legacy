@@ -10,9 +10,7 @@ Building libmumble on Unix-like systems
 
 To build libmumble and run its test suite (the only application
 that's really worth running right now), you can use the test.bash
-script in the root of the source tree. Doing this requires the gyp
-build system generator, available from http://code.google.com/p/gyp
-(or the 'gyp' package in your OS's package manager, if you're lucky).
+script in the root of the source tree.
 
 Running the test.bash script is simple:
 
@@ -31,12 +29,6 @@ the only thing that really runs is the libmumble-test executable.
 Can you use the library in an app? Probably. But I don't know
 how to hook it up. Feel free to contribute, if this is something
 you need urgently.
-
-To build libmumble for Android, you need a patched gyp tool
-available from https://github.com/mkrautz/gyp-libmumble which
-includes modifications to the stock 'android' generator which
-allows it to output Makefiles in a form usable by the Android
-NDK tools, and not only the AOSP source tree.
 
 To build and test, run:
  $ ./test.bash android

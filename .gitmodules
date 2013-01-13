@@ -7,3 +7,6 @@
 [submodule "3rdparty/openssl"]
 	path = 3rdparty/openssl
 	url = git://github.com/mkrautz/openssl-mirror.git
+[submodule "3rdparty/gyp"]
+	path = 3rdparty/gyp
+	url = git://github.com/mkrautz/gyp-libmumble.git

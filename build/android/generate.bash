@@ -5,4 +5,5 @@
 
 # Re-generates the Android NDK build files.
 # Must be run from the root of the source tree.
-gyp libmumble.gyp -f android -G android_ndk_version=1 --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=build/android/jni
+GYP=./3rdparty/gyp/gyp
+${GYP} libmumble.gyp -f android -G android_ndk_version=1 --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=build/android/jni
