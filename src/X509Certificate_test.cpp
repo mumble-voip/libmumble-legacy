@@ -13,7 +13,7 @@
 #include <vector>
 
 TEST(X509CertificateTest, TestLoadDERNoPrivateKey) {
-	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-leaf.crt"));
+	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-leaf.crt"));
 	mumble::X509Certificate cert = mumble::X509Certificate::FromRawDERData(der);
 	EXPECT_TRUE(cert.HasCertificate());
 	EXPECT_FALSE(cert.HasPrivateKey());
@@ -44,7 +44,7 @@ TEST(X509CertificateTest, TestSelfSignedDefaultArgs) {
 }
 
 TEST(X509CertificateTest, TestLoadPKCS12NoPassordNoPrivateKey) {
-	mumble::ByteArray pk12 = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-chain.p12"));
+	mumble::ByteArray pk12 = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-chain.p12"));
 	ASSERT_FALSE(pk12.IsNull());
 
 	std::vector<mumble::X509Certificate> chain = mumble::X509Certificate::FromPKCS12(pk12, std::string());
@@ -56,7 +56,7 @@ TEST(X509CertificateTest, TestLoadPKCS12NoPassordNoPrivateKey) {
 }
 
 TEST(X509CertificateTest, TestLoadPKCS12WithPassordNoPrivateKey) {
-	mumble::ByteArray pk12 = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-chain-password.p12"));
+	mumble::ByteArray pk12 = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-chain-password.p12"));
 	ASSERT_FALSE(pk12.IsNull());
 
 	std::vector<mumble::X509Certificate> chain = mumble::X509Certificate::FromPKCS12(pk12, std::string("password"));
@@ -107,7 +107,7 @@ TEST(X509CertificateTest, TestExportPKCS12WithPassword) {
 }
 
 TEST(X509CertificateTest, TestExportPKCS12ChainNoPrivateKey) {
-	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-leaf.crt"));
+	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-leaf.crt"));
 	mumble::X509Certificate cert = mumble::X509Certificate::FromRawDERData(der);
 	std::vector<mumble::X509Certificate> export_chain;
 	export_chain.push_back(cert);
@@ -122,7 +122,7 @@ TEST(X509CertificateTest, TestExportPKCS12ChainNoPrivateKey) {
 }
 
 TEST(X509CertificateTest, TestExportPKCS12GoogleDKChain) {
-	mumble::ByteArray pk12 = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-chain.p12"));
+	mumble::ByteArray pk12 = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-chain.p12"));
 	ASSERT_FALSE(pk12.IsNull());
 
 	std::vector<mumble::X509Certificate> export_chain = mumble::X509Certificate::FromPKCS12(pk12, std::string());
@@ -140,8 +140,8 @@ TEST(X509CertificateTest, TestExportPKCS12GoogleDKChain) {
 }
 
 TEST(X509CertificateTest, TestSHA1Digest) {
-	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-leaf.crt"));
-	mumble::ByteArray expected_sha1 = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-leaf.sha1"));
+	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-leaf.crt"));
+	mumble::ByteArray expected_sha1 = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-leaf.sha1"));
 	ASSERT_EQ(20, expected_sha1.Length());
 
 	mumble::X509Certificate cert = mumble::X509Certificate::FromRawDERData(der);
@@ -152,8 +152,8 @@ TEST(X509CertificateTest, TestSHA1Digest) {
 }
 
 TEST(X509CertificateTest, TestSHA256Digest) {
-	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-leaf.crt"));
-	mumble::ByteArray expected_sha256 = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-leaf.sha256"));
+	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-leaf.crt"));
+	mumble::ByteArray expected_sha256 = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-leaf.sha256"));
 	ASSERT_EQ(32, expected_sha256.Length());
 
 	mumble::X509Certificate cert = mumble::X509Certificate::FromRawDERData(der);
@@ -164,10 +164,10 @@ TEST(X509CertificateTest, TestSHA256Digest) {
 }
 
 TEST(X509CertificateTest, TestValidityTimeParsing) {
-	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-leaf.crt"));
+	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-leaf.crt"));
 	mumble::X509Certificate cert = mumble::X509Certificate::FromRawDERData(der);
-	mumble::ByteArray not_before_ba = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-leaf.notBefore"));
-	mumble::ByteArray not_after_ba = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-leaf.notAfter"));
+	mumble::ByteArray not_before_ba = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-leaf.notBefore"));
+	mumble::ByteArray not_after_ba = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-leaf.notAfter"));
 
 	std::string not_before_string(not_before_ba.Data(), not_before_ba.Length());
 	std::string not_after_string(not_after_ba.Data(), not_after_ba.Length());
@@ -183,7 +183,7 @@ TEST(X509CertificateTest, TestValidityTimeParsing) {
 }
 
 TEST(X509CertificateTest, SignedByTestGoogleChain) {
-	mumble::ByteArray pk12 = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-chain.p12"));
+	mumble::ByteArray pk12 = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-chain.p12"));
 	ASSERT_FALSE(pk12.IsNull());
 
 	std::vector<mumble::X509Certificate> chain = mumble::X509Certificate::FromPKCS12(pk12, std::string());
@@ -205,7 +205,7 @@ TEST(X509CertificateTest, SignedBySelfSigned) {
 }
 
 TEST(X509CertificateTest, ValidAtTimeGoogleDK) {
-	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-leaf.crt"));
+	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-leaf.crt"));
 
 	// Not before: Dec 6 08:56:04 2012 UTC
 	// Not after:  Jun 7 19:43:27 2013 UTC
@@ -246,14 +246,14 @@ TEST(X509CertificateTest, TestEmailAltNames) {
 }
 
 TEST(X509CertificateTest, TestSubjectName) {
-	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-leaf.crt"));
+	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-leaf.crt"));
 	mumble::X509Certificate cert = mumble::X509Certificate::FromRawDERData(der);
 
 	EXPECT_EQ(std::string("*.google.dk"), cert.SubjectName());
 }
 
 TEST(X509CertificateTest, TestSubjectCommonName) {
-	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-leaf.crt"));
+	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-leaf.crt"));
 	mumble::X509Certificate cert = mumble::X509Certificate::FromRawDERData(der);
 
 	EXPECT_EQ(std::string("*.google.dk"), cert.CommonName());
@@ -271,18 +271,18 @@ TEST(X509CertificateTest, TestSubjectNameFallback) {
 }
 
 TEST(X509CertificateTest, TestIssuerName) {
-	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-leaf.crt"));
+	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-leaf.crt"));
 	mumble::X509Certificate cert = mumble::X509Certificate::FromRawDERData(der);
 
 	EXPECT_EQ(std::string("Google Internet Authority"), cert.IssuerName());
 }
 
 TEST(X509CertificateTest, SubjectAndIssuerItemLookup) {
-	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-leaf.crt"));
+	mumble::ByteArray der = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-leaf.crt"));
 
-	// As per openssl x509 -in \*.google.dk-leaf.crt -inform der -noout -text:
+	// As per openssl x509 -in \wildcard-google.dk-leaf.crt -inform der -noout -text:
 	// Issuer: C=US, O=Google Inc, CN=Google Internet Authority
-	// Subject: C=US, ST=California, L=Mountain View, O=Google Inc, CN=*.google.dk
+	// Subject: C=US, ST=California, L=Mountain View, O=Google Inc, CN=wildcard-google.dk
 	mumble::X509Certificate cert = mumble::X509Certificate::FromRawDERData(der);
 
 	EXPECT_EQ(std::string("US"), cert.LookupIssuerItem(std::string("C")));

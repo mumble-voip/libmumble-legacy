@@ -19,7 +19,7 @@ TEST(X509Verifier, TestGoogleDKFullChain) {
 	opts.dns_name = std::string("www.google.dk");
 	opts.time = 1356880850; // Sun, 30 Dec 2012 15:20:50 GMT
 
-	mumble::ByteArray pk12 = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-chain.p12"));
+	mumble::ByteArray pk12 = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-chain.p12"));
 	ASSERT_FALSE(pk12.IsNull());
 
 	std::vector<mumble::X509Certificate> chain = mumble::X509Certificate::FromPKCS12(pk12, std::string());
@@ -35,7 +35,7 @@ TEST(X509Verifier, TestGoogleDKLeafAndIntermediates) {
 	opts.dns_name = std::string("www.google.dk");
 	opts.time = 1356880850; // Sun, 30 Dec 2012 15:20:50 GMT
 
-	mumble::ByteArray pk12 = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-chain.p12"));
+	mumble::ByteArray pk12 = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-chain.p12"));
 	ASSERT_FALSE(pk12.IsNull());
 
 	std::vector<mumble::X509Certificate> chain = mumble::X509Certificate::FromPKCS12(pk12, std::string());
@@ -51,7 +51,7 @@ TEST(X509Verifier, TestGoogleDKLeafAndIntermediates) {
 TEST(X509Verifier, TestGoogleDKLeafAndIntermediatesTimeValidity) {
 	mumble::X509Verifier &verifier = mumble::X509Verifier::SystemVerifier();
 
-	mumble::ByteArray pk12 = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-chain.p12"));
+	mumble::ByteArray pk12 = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-chain.p12"));
 	ASSERT_FALSE(pk12.IsNull());
 
 	std::vector<mumble::X509Certificate> chain = mumble::X509Certificate::FromPKCS12(pk12, std::string());
@@ -80,7 +80,7 @@ TEST(X509Verifier, TestGoogleDKLeafAndIntermediatesBadHostname) {
 	opts.dns_name = std::string("www.facebook.com");
 	opts.time = 1356880850; // Sun, 30 Dec 2012 15:20:50 GMT
 
-	mumble::ByteArray pk12 = LoadFile(std::string("testdata/x509/google.dk/*.google.dk-chain.p12"));
+	mumble::ByteArray pk12 = LoadFile(std::string("testdata/x509/google.dk/wildcard-google.dk-chain.p12"));
 	ASSERT_FALSE(pk12.IsNull());
 
 	std::vector<mumble::X509Certificate> chain = mumble::X509Certificate::FromPKCS12(pk12, std::string());
