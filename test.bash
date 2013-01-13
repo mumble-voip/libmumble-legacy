@@ -31,7 +31,32 @@ function make_build {
 	./test/out/Default/libmumble-test
 }
 
+function android_build {
+	./build/android/generate.bash
+	# Ensure the generated Android.mk has the same timestamp
+	# as our libmumble.gyp file. This is a simplistic remedy
+	# for ndk-build/make rebuilding the whole project when
+	# the build files are regenerated. This will possibly
+	# result in weird behavior if new gyp files are added
+	# to a project without touching the libmumble.gyp file,
+	# but who knows.
+	touch -r libmumble.gyp ./build/android/jni/Android.mk
+	cd ./build/android/jni
+	ndk-build
+	adb shell mkdir -p /sdcard/libmumble
+	adb shell su -c "umount /sdcard/libmumble"
+	adb shell su -c "mount -t tmpfs -o size=25m none /sdcard/libmumble"
+	adb push ../libs/armeabi/mumble-test /sdcard/libmumble/mumble-test
+	adb push ../../../testdata /sdcard/libmumble/testdata
+	adb shell "cd /sdcard/libmumble && ./mumble-test"
+}
+
 trap exit SIGINT SIGTERM
+
+if [ "${1}" == "android" ]; then
+	android_build
+	exit
+fi
 
 system=$(uname -s)
 case "$system" in

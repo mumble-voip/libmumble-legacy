@@ -31,7 +31,14 @@
 				'src/X509HostnameVerifier.cpp',
 			],
 			'conditions': [
+				['OS=="linux"', {
+					'defines': ['LIBMUMBLE_OS_LINUX'],
+					'link_settings': {
+						'libraries': [ '-lpthread', '-lrt' ],
+					},
+				}],
 				['OS=="mac"', {
+					'defines': ['LIBMUMBLE_OS_MAC'],
 					'xcode_settings': {
 						'CLANG_CXX_LANGUAGE_STANDARD': 'c++0x',
 						'CLANG_CXX_LIBRARY': 'libc++',
@@ -48,6 +55,12 @@
 					],
 					'sources': [
 						'src/X509Verifier_mac.mm',
+					],
+				}],
+				['OS=="android"', {
+					'defines': [ 'LIBMUMBLE_OS_ANDROID', '__STDC_LIMIT_MACROS' ],
+					'sources': [
+						'src/Compat_android.cpp',
 					],
 				}],
 			],
@@ -68,11 +81,7 @@
 				'3rdparty/gtest/include',
 				'3rdparty/gtest',
 			],
-			'link_settings': {
-				'libraries': [ '-lpthread', '-lrt' ],
-			},
 			'sources': [
-				'3rdparty/gtest/src/gtest-all.cc',
 				'src/ByteArray_test.cpp',
 				'src/mumble_test.cpp',
 				'src/X509Certificate_test.cpp',
@@ -90,7 +99,13 @@
 						'GTEST_USE_OWN_TR1_TUPLE=1',
 					],
 				}],
+				['OS=="android"', {
+					'defines': ['__STDC_LIMIT_MACROS' ],
+					'sources': [
+						'src/Compat_android_test.cpp',
+					],
+				}],
 			],
-		}
+		},
 	],
 }

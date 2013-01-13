@@ -127,6 +127,11 @@
 			'target_name':  'libcrypto',
 			'product_name': 'crypto',
 			'type':         '<(library)',
+			'link_settings': {
+				'libraries': [
+					'-lz',
+				],
+			},
 			'include_dirs': [
 				'../openssl',
 				'../openssl/include',
@@ -143,6 +148,7 @@
 				'OPENSSL_NO_GMP=1',
 				'OPENSSL_THREADS=1',
 				'_REENTRANT=1',
+				'ZLIB=1',
 			],
 			'sources': [
 				# aes
@@ -805,6 +811,18 @@
 					'cflags': [ '-fPIC' ],
 					'ldflags': [ '-Wl,-Bsymbolic' ],
 				}],
+				# The xcodeproj generator requires we explicitly
+				# spell out libraries.
+				['OS=="mac"', {
+					'link_settings': {
+						'libraries': [
+							'/usr/lib/libz.dylib',
+						],
+						'libraries!': [
+							'-lz',
+						],
+					},	
+				}],
 				['openssl_asm=="gnuas-x86_64"', {
 					'dependencies': [
 						'generate-x86_64-opensslconf',
@@ -925,6 +943,7 @@
 				'OPENSSL_NO_GMP=1',
 				'OPENSSL_THREADS=1',
 				'_REENTRANT=1',
+				'ZLIB=1',
 			],
 			'sources': [
 				'../openssl/ssl/bio_ssl.c',

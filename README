@@ -5,14 +5,56 @@ libmumble is an attempt at writing a cross-platform C++ library for
 implementing Mumble clients. The initial client of libmumble is
 MumbleKit, the Objective-C Mumble framework for iOS and Mac OS X.
 
-Building libmumble
-==================
+Building libmumble on Unix-like systems
+=======================================
 
-Note: libmumble has been developed on Ubuntu 12.10 using clang 3.0.
-These instructions expect that environment.
+To build libmumble and run its test suite (the only application
+that's really worth running right now), you can use the test.bash
+script in the root of the source tree. Doing this requires the gyp
+build system generator, available from http://code.google.com/p/gyp
+(or the 'gyp' package in your OS's package manager, if you're lucky).
 
-cd 3rdparty/libuv
-make
-cd ../../
-cmake -G Ninja
-ninja
+Running the test.bash script is simple:
+
+ $ ./test.bash
+
+This will generate build scripts suitable for your environment (Ninja,
+Make or an Xcode project on Macs). It'll perform a build and execute
+the libmumble-test binary, which runs the libmumble test suite.
+
+Building libmumble for Android
+==============================
+
+It's possible to build libmumble for Android. Currently,
+the only thing that really runs is the libmumble-test executable.
+
+Can you use the library in an app? Probably. But I don't know
+how to hook it up. Feel free to contribute, if this is something
+you need urgently.
+
+To build libmumble for Android, you need a patched gyp tool
+available from https://github.com/mkrautz/gyp-libmumble which
+includes modifications to the stock 'android' generator which
+allows it to output Makefiles in a form usable by the Android
+NDK tools, and not only the AOSP source tree.
+
+To build and test, run:
+ $ ./test.bash android
+from the root of the source tree.
+
+This will build and run (via adb) the libmumble-test executable
+on a conneted Android device. You should probably only have a
+single device connected at a time for this to work - the script
+isn't too considerate of other scenarios.
+
+Prerequisites
+-------------
+
+Running the libmumble-test binary on Android requires a device with
+a /usr/bin/su binary installed, allowing the test.bash script to gain
+root privileges in order to mount a tmpfs file system on which the
+libmumble test data and test executable will live and execute from.
+
+The test.bash script also expects that you have the
+<ANDROID_SDK>/platform-tools and <ANDROID_NDK> paths in your PATH
+environment variable.

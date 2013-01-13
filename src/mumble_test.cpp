@@ -3,6 +3,7 @@
 // license that can be found in the LICENSE-file.
 
 #include <gtest/gtest.h>
+
 #include "mumble_test.h"
 
 #include <mumble/ByteArray.h>
@@ -13,6 +14,14 @@
 
 #include <iostream>
 #include <fstream>
+
+// The Android generator for gyp is very keen on
+// all sources of a target having the same file
+// extension. This means that we can't include
+// gtest's test-all.cc file in our sources.
+//
+// Let's just include it here instead.
+#include "src/gtest-all.cc"
 
 mumble::ByteArray LoadFile(const std::string &path) {
 	mumble::ByteArray ba;

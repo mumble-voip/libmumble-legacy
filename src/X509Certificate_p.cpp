@@ -19,6 +19,10 @@
 #include <vector>
 #include <assert.h>
 
+#ifdef LIBMUMBLE_OS_ANDROID
+# include "Compat_android.h"
+#endif
+
 namespace mumble {
 
 X509CertificatePrivate::X509CertificatePrivate() {
