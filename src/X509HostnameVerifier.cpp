@@ -9,7 +9,7 @@ namespace mumble {
 
 // VerifyHostname verifies that the certificate at cert is valid
 // for connections to the passed-in hostname.
-bool X509HostnameVerifier::VerifyHostname(X509Certificate &cert, const std::string &hostname) {
+bool X509HostnameVerifier::VerifyHostname(const X509Certificate &cert, const std::string &hostname) {
 	std::vector<std::string> dns_names = cert.DNSNames();
 	if (dns_names.size() > 0) {
 		for (auto dns_name : dns_names) {

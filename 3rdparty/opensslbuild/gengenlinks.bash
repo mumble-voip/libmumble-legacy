@@ -28,6 +28,8 @@ for fn in $(ls ../openssl/include/openssl); do
 	echo "ln -s ${dst} ${fn} 2>/dev/null" >> genlinks.bash
 done
 
+echo "exit 0" >> genlinks.bash
+
 cd ../openssl
 
 git clean -dfx

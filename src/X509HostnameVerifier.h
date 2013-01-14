@@ -16,7 +16,7 @@ class X509HostnameVerifier {
 public:
 	static std::vector<std::string> LowerCaseHostnameVector(const std::string &hostname);
 	static bool HostnameExprMatch(const std::string &hostexpr, const std::string &hostname);
-	static bool VerifyHostname(X509Certificate &cert, const std::string &hostname);
+	static bool VerifyHostname(const X509Certificate &cert, const std::string &hostname);
 };
 
 }

@@ -65,47 +65,47 @@ ByteArray X509Certificate::SHA256Digest() const {
 	return dptr_->Digest(std::string("sha256"));
 }
 
-std::time_t X509Certificate::NotBeforeTime() {
+std::time_t X509Certificate::NotBeforeTime() const {
 	return dptr_->NotBeforeTime();
 }
 
-std::time_t X509Certificate::NotAfterTime() {
+std::time_t X509Certificate::NotAfterTime() const {
 	return dptr_->NotAfterTime();
 }
 
-bool X509Certificate::IsSignedBy(const X509Certificate &parent) {
+bool X509Certificate::IsSignedBy(const X509Certificate &parent) const {
 	return dptr_->IsSignedBy(parent);
 }
 
-bool X509Certificate::IsValidAtTime(std::time_t time) {
+bool X509Certificate::IsValidAtTime(std::time_t time) const {
 	return time >= NotBeforeTime() && time <= NotAfterTime();
 }
 
-std::string X509Certificate::SubjectName() {
+std::string X509Certificate::SubjectName() const {
 	return dptr_->SubjectName();
 }
 
-std::string X509Certificate::CommonName() {
+std::string X509Certificate::CommonName() const {
 	return dptr_->CommonName();
 }
 
-std::string X509Certificate::EmailAddress() {
+std::string X509Certificate::EmailAddress() const {
 	return dptr_->EmailAddress();
 }
 
-std::vector<std::string> X509Certificate::DNSNames() {
+std::vector<std::string> X509Certificate::DNSNames() const {
 	return dptr_->DNSNames();
 }
 
-std::string X509Certificate::IssuerName() {
+std::string X509Certificate::IssuerName() const {
 	return dptr_->IssuerName();
 }
 
-std::string X509Certificate::LookupIssuerItem(const std::string &item) {
+std::string X509Certificate::LookupIssuerItem(const std::string &item) const{
 	return dptr_->LookupIssuerItem(item);
 }
 
-std::string X509Certificate::LookupSubjectItem(const std::string &item) {
+std::string X509Certificate::LookupSubjectItem(const std::string &item) const {
 	return dptr_->LookupSubjectItem(item);
 }
 

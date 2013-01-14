@@ -6,6 +6,7 @@
 #define MUMBLE_X509_VERIFIER_OPENSSL_H_
 
 #include <mumble/X509Verifier.h>
+#include "X509PEMVerifier.h"
 
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>
@@ -18,11 +19,9 @@ namespace mumble {
 class X509VerifierPrivate {
 public:
 	X509VerifierPrivate();
-	void ReadSystemCAs();
-	bool VerifyChain(std::vector<X509Certificate> chain, const X509VerifierOptions &opts);
 	static void InitializeSystemVerifier();
 
-	X509_STORE *store_;
+	X509PEMVerifier pem_verifier_;
 };
 
 }

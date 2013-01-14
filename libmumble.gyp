@@ -27,6 +27,7 @@
 				'src/ByteArray.cpp',
 				'src/X509Certificate.cpp',
 				'src/X509Certificate_p.cpp',
+				'src/X509PEMVerifier.cpp',
 				'src/X509Verifier_openssl.cpp',
 				'src/X509HostnameVerifier.cpp',
 			],

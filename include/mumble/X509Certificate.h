@@ -35,22 +35,23 @@ public:
 	ByteArray SHA1Digest() const ;
 	ByteArray SHA256Digest() const;
 
-	std::time_t NotBeforeTime();
-	std::time_t NotAfterTime();
+	std::time_t NotBeforeTime() const;
+	std::time_t NotAfterTime() const;
 
-	bool IsSignedBy(const X509Certificate &parent);
-	bool IsValidAtTime(std::time_t time);
+	bool IsSignedBy(const X509Certificate &parent) const;
+	bool IsValidAtTime(std::time_t time) const;
 
-	std::string SubjectName();
-	std::string CommonName();
-	std::string EmailAddress();
-	std::vector<std::string> DNSNames();
-	std::string IssuerName();
+	std::string SubjectName() const;
+	std::string CommonName() const;
+	std::string EmailAddress() const;
+	std::vector<std::string> DNSNames() const;
+	std::string IssuerName() const;
 
-	std::string LookupIssuerItem(const std::string &item);
-	std::string LookupSubjectItem(const std::string &item);
+	std::string LookupIssuerItem(const std::string &item) const;
+	std::string LookupSubjectItem(const std::string &item) const;
 
 private:
+	friend class X509PEMVerifier;
 	friend class X509VerifierPrivate;
 	friend class X509CertificatePrivate;
 	std::unique_ptr<X509CertificatePrivate> dptr_;

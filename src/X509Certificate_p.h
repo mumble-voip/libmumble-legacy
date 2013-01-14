@@ -49,23 +49,23 @@ public:
 	static ByteArray ExportCertificateChainAsPKCS12(std::vector<X509Certificate>chain, const std::string &password);
 	static std::vector<X509Certificate> FromPKCS12(const ByteArray &pkcs12, const std::string &password);
 
-	X509 *AsOpenSSLX509();
+	X509 *AsOpenSSLX509() const;
 
 	ByteArray Digest(const std::string &name) const;
 
-	std::time_t NotBeforeTime();
-	std::time_t NotAfterTime();
+	std::time_t NotBeforeTime() const;
+	std::time_t NotAfterTime() const;
 
-	bool IsSignedBy(const X509Certificate &parent);
+	bool IsSignedBy(const X509Certificate &parent) const;
 
-	std::string SubjectName();
-	std::string CommonName();
-	std::string EmailAddress();
-	std::vector<std::string> DNSNames();
-	std::string IssuerName();
+	std::string SubjectName() const;
+	std::string CommonName() const;
+	std::string EmailAddress() const;
+	std::vector<std::string> DNSNames() const;
+	std::string IssuerName() const;
 
-	std::string LookupIssuerItem(const std::string &item);
-	std::string LookupSubjectItem(const std::string &item);
+	std::string LookupIssuerItem(const std::string &item) const;
+	std::string LookupSubjectItem(const std::string &item) const;
 };
 
 }

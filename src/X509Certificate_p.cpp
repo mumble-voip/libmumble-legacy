@@ -107,7 +107,7 @@ ByteArray X509CertificatePrivate::Digest(const std::string &name) const {
 	return ba;
 }
 
-std::string X509CertificatePrivate::SubjectName() {
+std::string X509CertificatePrivate::SubjectName() const {
 	// If the subject has a CN, use that.
 	auto cn = CommonName();
 	if (!cn.empty()) {
@@ -132,7 +132,7 @@ std::string X509CertificatePrivate::SubjectName() {
 	return std::string();
 }
 
-std::string X509CertificatePrivate::CommonName() {
+std::string X509CertificatePrivate::CommonName() const {
 	auto cn = subject_items_.find(std::string("CN"));
 	if (cn != subject_items_.end()) {
 		return (*cn).second;
@@ -140,18 +140,18 @@ std::string X509CertificatePrivate::CommonName() {
 	return std::string();
 }
 
-std::string X509CertificatePrivate::EmailAddress() {
+std::string X509CertificatePrivate::EmailAddress() const {
 	if (email_addrs_.size() > 0) {
 		return email_addrs_.front();
 	}
 	return std::string();
 }
 
-std::vector<std::string> X509CertificatePrivate::DNSNames() {
+std::vector<std::string> X509CertificatePrivate::DNSNames() const {
 	return std::vector<std::string>(dns_names_.begin(), dns_names_.end());
 }
 
-std::string X509CertificatePrivate::IssuerName() {
+std::string X509CertificatePrivate::IssuerName() const {
 	auto cn = issuer_items_.find(std::string("CN"));
 	if (cn != issuer_items_.end()) {
 		return (*cn).second;
@@ -159,7 +159,7 @@ std::string X509CertificatePrivate::IssuerName() {
 	return std::string();
 }
 
-std::string X509CertificatePrivate::LookupIssuerItem(const std::string &item) {
+std::string X509CertificatePrivate::LookupIssuerItem(const std::string &item) const {
 	auto found = issuer_items_.find(std::string(item));
 	if (found != issuer_items_.end()) {
 		return (*found).second;
@@ -167,7 +167,7 @@ std::string X509CertificatePrivate::LookupIssuerItem(const std::string &item) {
 	return std::string();
 }
 
-std::string X509CertificatePrivate::LookupSubjectItem(const std::string &item) {
+std::string X509CertificatePrivate::LookupSubjectItem(const std::string &item) const {
 	auto found = subject_items_.find(std::string(item));
 	if (found != subject_items_.end()) {
 		return (*found).second;
@@ -180,20 +180,20 @@ std::string X509CertificatePrivate::LookupSubjectItem(const std::string &item) {
 // responsibility of the caller to ensure
 // that the returned X509 pointer is freed
 // by a call to X509_free().
-X509 *X509CertificatePrivate::AsOpenSSLX509() {
+X509 *X509CertificatePrivate::AsOpenSSLX509() const {
 	const char *p = cert_der_.ConstData();
 	return d2i_X509(nullptr, reinterpret_cast<const unsigned char **>(&p), cert_der_.Length());
 }
 
-std::time_t X509CertificatePrivate::NotBeforeTime() {
+std::time_t X509CertificatePrivate::NotBeforeTime() const {
 	return not_before_;
 }
 
-std::time_t X509CertificatePrivate::NotAfterTime() {
+std::time_t X509CertificatePrivate::NotAfterTime() const {
 	return not_after_;
 }
 
-bool X509CertificatePrivate::IsSignedBy(const X509Certificate &parent) {
+bool X509CertificatePrivate::IsSignedBy(const X509Certificate &parent) const {
 	X509 *us = AsOpenSSLX509();
 	X509 *it = parent.dptr_->AsOpenSSLX509();
 	bool result = false;
