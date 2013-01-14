@@ -60,8 +60,12 @@
 				}],
 				['OS=="android"', {
 					'defines': [ 'LIBMUMBLE_OS_ANDROID', '__STDC_LIMIT_MACROS' ],
+					'sources!': [
+						'src/X509Verifier_openssl.cpp',
+					],
 					'sources': [
 						'src/Compat_android.cpp',
+						'src/X509Verifier_android.cpp',
 					],
 				}],
 			],
