@@ -17,27 +17,27 @@ GYP=./gyp
 
 function xcode_build {
 	${GYP} libmumble.gyp -f xcode --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
-	xcodebuild -project test/libmumble.xcodeproj/ -target libmumble-test -configuration Default CONFIGURATION_BUILD_DIR=test/build
+	xcodebuild -project test/libmumble.xcodeproj/ -target libmumble-test -configuration Default CONFIGURATION_BUILD_DIR=test/build || exit 1
 	./test/build/libmumble-test
 }
 
 function ninja_build {
 	${GYP} libmumble.gyp -f ninja --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
-	ninja -C test/out/Default
+	ninja -C test/out/Default || exit 1
 	./test/out/Default/libmumble-test
 }
 
 function make_build {
 	${GYP} libmumble.gyp -f make --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
-	make -C test/
+	make -C test/ || exit 1
 	./test/out/Default/libmumble-test
 }
 
 function android_build {
 	# Ensure the needed auto-geneated OpenSSL files are present.
 	cd 3rdparty/opensslbuild
-	./genconf.bash opensslconf-dist.h
-	./genlinks.bash
+	./genconf.bash opensslconf-dist.h || exit 1
+	./genlinks.bash || exit 1
 	cd ../..
 
 	./build/android/generate.bash
@@ -51,7 +51,7 @@ function android_build {
 	touch -r libmumble.gyp ./build/android/jni/Android.mk
 
 	cd ./build/android/jni
-	ndk-build
+	ndk-build || exit 1
 	adb shell mkdir -p /sdcard/libmumble
 	adb shell su -c "umount /sdcard/libmumble"
 	adb shell su -c "mount -t tmpfs -o size=25m none /sdcard/libmumble"
