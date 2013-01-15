@@ -35,7 +35,8 @@
 								'asm/gnuas/crypto/rc4/asm/rc4-x86_64.S',
 								'asm/gnuas/crypto/bn/asm/x86_64-mont.S',
 							],
-							'action': [ './genasm-gnuas-x86_64.bash' ],
+							'action': [ 'bash', 'genasm-gnuas-x86_64.bash' ],
+							'msvs_cygwin_shell': 0,
 						},
 					],
 				},
@@ -51,7 +52,8 @@
 							'outputs': [
 								'../openssl/crypto/opensslconf.h',
 							],
-							'action': [ './genconf.bash', '<@(_inputs)', ],
+							'action': [ 'bash', 'genconf.bash', '<@(_inputs)', ],
+							'msvs_cygwin_shell': 0,
 						},
 					],
 				},
@@ -99,7 +101,8 @@
 								'asm/gnuas/crypto/bn/asm/co-586.S',
 								'asm/gnuas/crypto/bn/asm/x86-mont.S',
 							],
-							'action': [ './genasm-gnuas-x86.bash' ],
+							'action': [ 'bash', 'genasm-gnuas-x86.bash' ],
+							'msvs_cygwin_shell': 0,
 						},
 					],
 				},
@@ -115,7 +118,8 @@
 							'outputs': [
 								'../openssl/crypto/opensslconf.h',
 							],
-							'action': [ './genconf.bash', '<@(_inputs)', ],
+							'action': [ 'bash', 'genconf.bash', '<@(_inputs)', ],
+							'msvs_cygwin_shell': 0,
 						},
 					],
 				},
@@ -131,7 +135,8 @@
 					'action_name': 'genlinks',
 					'inputs': [],
 					'outputs': ['../3rdparty/openssl/include/openssl'],
-					'action': [ './genlinks.bash' ],
+					'action': [ 'bash', 'genlinks.bash' ],
+					'msvs_cygwin_shell': 0,
 				},
 			],
 		},
@@ -147,7 +152,8 @@
 					'outputs': [
 						'../openssl/crypto/opensslconf.h',
 					],
-					'action': [ './genconf.bash', '<@(_inputs)', ],
+					'action': [ 'bash', 'genconf.bash', '<@(_inputs)', ],
+					'msvs_cygwin_shell': 0,
 				},
 			],
 		},
@@ -806,6 +812,23 @@
 						],
 					},	
 				}],
+				['OS=="win"', {
+					'defines': [
+						'OPENSSL_SYSNAME_WIN32',
+						'WIN32_LEAN_AND_MEAN',
+						'L_ENDIAN',
+						'UNICODE',
+						'_UNICODE',
+						'_CRT_SECURE_NO_DEPRECATE',
+					],
+					'defines!': [ 'ZLIB=1' ],
+					'sources!': [ '../openssl/crypto/comp/c_zlib.c' ],
+					'link_settings': {
+						'libraries!': [
+							'-lz',
+						],
+					},
+				}],
 				['openssl_asm=="gnuas-x86_64"', {
 					'dependencies': [
 						'generate-x86_64-opensslconf',
@@ -1005,6 +1028,17 @@
 					'dependencies!': [
 						'generate-generic-opensslconf',
 					],
+				}],
+				['OS=="win"', {
+					'defines': [
+						'OPENSSL_SYSNAME_WIN32',
+						'WIN32_LEAN_AND_MEAN',
+						'L_ENDIAN',
+						'UNICODE',
+						'_UNICODE',
+						'_CRT_SECURE_NO_DEPRECATE',
+					],
+					'defines!': [ 'ZLIB=1' ],
 				}],
 			],
 		},
