@@ -21,6 +21,13 @@ function xcode_build {
 	./test/build/libmumble-test
 }
 
+function msvs_build {
+	export GYP_MSVS_VERSION=2012
+	python ${GYP} libmumble.gyp -f msvs --depth .. -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
+	echo "MSVS build not integrated at present"
+	exit 1
+}
+
 function ninja_build {
 	${GYP} libmumble.gyp -f ninja --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
 	ninja -C test/out/Default || exit 1
@@ -69,8 +76,12 @@ fi
 
 system=$(uname -s)
 case "$system" in
-	"Darwin")
+	Darwin)
 		xcode_build
+		exit
+		;;
+	MINGW*)
+		msvs_build
 		exit
 		;;
 	*)

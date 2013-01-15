@@ -6,6 +6,7 @@
 #define MUMBLE_CONNECTION_H_
 
 #include <memory>
+#include <string>
 
 namespace mumble {
 

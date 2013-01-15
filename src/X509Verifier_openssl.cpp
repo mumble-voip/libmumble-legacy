@@ -3,6 +3,7 @@
 // license that can be found in the LICENSE-file.
 
 #include <mumble/X509Verifier.h>
+#include <mumble/X509Certificate.h>
 #include "X509Verifier_openssl.h"
 #include "X509PEMVerifier.h"
 

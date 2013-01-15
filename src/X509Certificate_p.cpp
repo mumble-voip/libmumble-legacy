@@ -580,6 +580,9 @@ std::time_t X509CertificatePrivate::ParseASN1Time(ASN1_TIME *time) {
 	// being UTC, and use timegm to convert it to a Unix epoch timestamp.
 	buf[14] = 0;
 
+#ifdef LIBMUMBLE_OS_WINDOWS
+	return 0;
+#else
 	memset(&tm, 0, sizeof(tm));
 	if (strptime(buf, "%Y%m%d%H%M%S", &tm) == nullptr) {
 		std::cerr << "X509CertificatePrivate: Invalid ASN.1 date for PKIX purposes encountered." << std::endl;
@@ -587,6 +590,7 @@ std::time_t X509CertificatePrivate::ParseASN1Time(ASN1_TIME *time) {
 	}
 
 	return timegm(&tm);
+#endif
 }
 
 }

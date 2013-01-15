@@ -58,6 +58,9 @@
 						'src/X509Verifier_mac.mm',
 					],
 				}],
+				['OS=="win"', {
+					'defines': [ 'LIBMUMBLE_OS_WINDOWS' ],
+				}],
 				['OS=="android"', {
 					'defines': [ 'LIBMUMBLE_OS_ANDROID', '__STDC_LIMIT_MACROS' ],
 					'sources!': [
@@ -99,6 +102,12 @@
 						'CLANG_CXX_LANGUAGE_STANDARD': 'c++0x',
 						'CLANG_CXX_LIBRARY': 'libc++',
 					},
+					'defines': [
+						'GTEST_HAS_TR1_TUPLE=0',
+						'GTEST_USE_OWN_TR1_TUPLE=1',
+					],
+				}],
+				['OS=="win"', {
 					'defines': [
 						'GTEST_HAS_TR1_TUPLE=0',
 						'GTEST_USE_OWN_TR1_TUPLE=1',

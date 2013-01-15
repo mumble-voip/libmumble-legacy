@@ -822,7 +822,12 @@
 						'_CRT_SECURE_NO_DEPRECATE',
 					],
 					'defines!': [ 'ZLIB=1' ],
-					'sources!': [ '../openssl/crypto/comp/c_zlib.c' ],
+					'sources!': [
+						'../openssl/crypto/rand/rand_unix.c',
+					],
+					'sources': [
+						'../openssl/crypto/rand/rand_win.c',
+					],
 					'link_settings': {
 						'libraries!': [
 							'-lz',
