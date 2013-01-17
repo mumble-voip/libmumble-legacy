@@ -60,6 +60,7 @@
 				}],
 				['OS=="win"', {
 					'defines': [ 'LIBMUMBLE_OS_WINDOWS' ],
+					'sources': [ 'src/Compat_win.cpp' ],
 				}],
 				['OS=="android"', {
 					'defines': [ 'LIBMUMBLE_OS_ANDROID', '__STDC_LIMIT_MACROS' ],
@@ -111,6 +112,9 @@
 					'defines': [
 						'GTEST_HAS_TR1_TUPLE=0',
 						'GTEST_USE_OWN_TR1_TUPLE=1',
+					],
+					'sources': [
+						'src/Compat_win_test.cpp',
 					],
 				}],
 				['OS=="android"', {
