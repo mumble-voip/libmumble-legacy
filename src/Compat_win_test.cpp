@@ -19,16 +19,16 @@ TEST(CompatWindowsTest, ValidStrptimeFormat) {
 	struct tm tm;
 	memset(&tm, 0, sizeof(tm));
 
-	const char *buf = "20130117180000";
+	const char *buf = "20130217181920";
 	char *ret = strptime(buf, "%Y%m%d%H%M%S", &tm);
 	ASSERT_FALSE(ret == nullptr);
 
 	EXPECT_EQ(2013-1900, tm.tm_year);
-	EXPECT_EQ(0, tm.tm_mon);
+	EXPECT_EQ(1, tm.tm_mon);
 	EXPECT_EQ(17, tm.tm_mday);
 	EXPECT_EQ(18, tm.tm_hour);
-	EXPECT_EQ(0, tm.tm_min);
-	EXPECT_EQ(0, tm.tm_sec);
+	EXPECT_EQ(19, tm.tm_min);
+	EXPECT_EQ(20, tm.tm_sec);
 
 	EXPECT_EQ(0, tm.tm_isdst);
 	EXPECT_EQ(0, tm.tm_wday);
