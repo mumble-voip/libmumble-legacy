@@ -60,7 +60,18 @@
 				}],
 				['OS=="win"', {
 					'defines': [ 'LIBMUMBLE_OS_WINDOWS' ],
-					'sources': [ 'src/Compat_win.cpp' ],
+					'link_settings': {
+						'libraries': [
+							'crypt32',
+						],
+					},
+					'sources!': [
+						'src/X509Verifier_openssl.cpp',
+					],
+					'sources': [
+						'src/Compat_win.cpp',
+						'src/X509Verifier_win.cpp',
+					],
 				}],
 				['OS=="android"', {
 					'defines': [ 'LIBMUMBLE_OS_ANDROID', '__STDC_LIMIT_MACROS' ],
