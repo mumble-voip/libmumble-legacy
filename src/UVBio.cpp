@@ -136,7 +136,11 @@ int UVBioState::Write(BIO *b, const char *buf, int len) {
 	uv_write_t *req = static_cast<uv_write_t *>(calloc(sizeof(*req), 1));
 	uv_buf_t uvbuf;
 	uvbuf.base = const_cast<char *>(buf);
+#ifdef LIBMUMBLE_OS_WINDOWS
 	uvbuf.len = static_cast<ULONG>(len);
+#else
+	uvbuf.len = static_cast<size_t>(len);
+#endif
 
 	int err = uv_write(req, stream, &uvbuf, 1, UVBioState::WriteCallback);
 	if (err != UV_OK) {
