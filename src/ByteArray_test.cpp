@@ -175,3 +175,9 @@ TEST(ByteArrayTest, TestEqualCapIndifference) {
 
 	EXPECT_EQ(a, b);
 }
+
+TEST(ByteArrayTest, ConstructorCapLessThanLen) {
+	char *buf = "hello, world!";
+	mumble::ByteArray hw(buf, strlen(buf), 4);
+	ASSERT_TRUE(hw.IsNull());
+}

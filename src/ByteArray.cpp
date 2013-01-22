@@ -30,6 +30,11 @@ ByteArray::ByteArray(char *buf, int len, int cap) {
 	} else {
 		if (cap == -1) {
 			cap = len;
+		} else if (cap < len) {
+			buf_ = nullptr;
+			len_ = 0;
+			cap_ = 0;
+			return;
 		}
 		buf_ = static_cast<char *>(malloc(cap));
 		memcpy(buf_, buf, cap);
