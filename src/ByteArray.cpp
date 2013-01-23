@@ -56,14 +56,10 @@ ByteArray::ByteArray(const ByteArray &ba) {
 	}
 }
 
-void ByteArray::swap(ByteArray &a, ByteArray &b) {
-	std::swap(a.buf_, b.buf_);
-	std::swap(a.len_, b.len_);
-	std::swap(a.cap_, b.cap_);
-}
-
 ByteArray& ByteArray::operator=(ByteArray ba) {
-	swap(*this, ba);
+	std::swap(buf_, ba.buf_);
+	std::swap(len_, ba.len_);
+	std::swap(cap_, ba.cap_);
 	return *this;
 }
 
