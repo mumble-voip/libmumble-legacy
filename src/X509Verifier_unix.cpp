@@ -4,11 +4,12 @@
 
 #include <mumble/X509Verifier.h>
 #include <mumble/X509Certificate.h>
-#include "X509Verifier_openssl.h"
+#include "X509Verifier_unix.h"
 #include "X509PEMVerifier.h"
 
 #include <vector>
 #include <string>
+#include <fstream>
 
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>
@@ -38,11 +39,41 @@ bool X509Verifier::VerifyChain(std::vector<X509Certificate> chain, const X509Ver
 	return dptr_->pem_verifier_.VerifyChain(chain, opts);
 }
 
+// read_caroot_pem reads a CA certificate named fn from dir.
+ByteArray read_pem_bundle(const std::string &fn) {
+	mumble::ByteArray ba;
+	std::ifstream ifs;
+	ifs.open(fn, std::ios::binary);
+	while (ifs.good()) {
+		mumble::ByteArray chunk(256);
+		char *buf = chunk.Data();
+		ifs.read(buf, chunk.Length());
+		chunk.Truncate(ifs.gcount());
+		if (chunk.Length() > 0) {
+			ba.Append(chunk);
+		}
+	}
+	ifs.close();
+	return ba;
+}
+
 X509VerifierPrivate::X509VerifierPrivate() {
-#if 1
+#if defined(LIBMUMBLE_SYSTEM_OPENSSL)
 	X509_STORE_set_default_paths(pem_verifier_.store_);
 #else
-# error libmumble does not have a list of CA paths to search
+	const char *bundles[] = {
+		// Debian and Ubuntu
+		"/etc/ssl/certs/ca-certificates.crt",
+	};
+
+	int nbundles = sizeof(bundles)/sizeof(*bundles);
+	for (int i = 0; i < nbundles; i++) {
+		ByteArray bundle = read_pem_bundle(std::string(bundles[i]));
+		if (bundle.Length() > 0) {
+			pem_verifier_.AddPEM(bundle);
+			break;
+		}
+	}
 #endif
 }
 

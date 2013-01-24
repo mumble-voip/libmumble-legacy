@@ -28,7 +28,7 @@
 				'src/X509Certificate.cpp',
 				'src/X509Certificate_p.cpp',
 				'src/X509PEMVerifier.cpp',
-				'src/X509Verifier_openssl.cpp',
+				'src/X509Verifier_unix.cpp',
 				'src/X509HostnameVerifier.cpp',
 			],
 			'conditions': [
@@ -52,7 +52,7 @@
 						],
 					},
 					'sources!': [
-						'src/X509Verifier_openssl.cpp',
+						'src/X509Verifier_unix.cpp',
 					],
 					'sources': [
 						'src/X509Verifier_mac.mm',
@@ -66,7 +66,7 @@
 						],
 					},
 					'sources!': [
-						'src/X509Verifier_openssl.cpp',
+						'src/X509Verifier_unix.cpp',
 					],
 					'sources': [
 						'src/Compat_win.cpp',
@@ -76,7 +76,7 @@
 				['OS=="android"', {
 					'defines': [ 'LIBMUMBLE_OS_ANDROID', '__STDC_LIMIT_MACROS' ],
 					'sources!': [
-						'src/X509Verifier_openssl.cpp',
+						'src/X509Verifier_unix.cpp',
 					],
 					'sources': [
 						'src/Compat_android.cpp',

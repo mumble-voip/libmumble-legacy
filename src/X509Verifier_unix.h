@@ -2,8 +2,8 @@
 // The use of this source code is goverened by a BSD-style
 // license that can be found in the LICENSE-file.
 
-#ifndef MUMBLE_X509_VERIFIER_OPENSSL_H_
-#define MUMBLE_X509_VERIFIER_OPENSSL_H_
+#ifndef MUMBLE_X509_VERIFIER_UNIX_H_
+#define MUMBLE_X509_VERIFIER_UNIX_H_
 
 #include <mumble/X509Verifier.h>
 #include "X509PEMVerifier.h"
