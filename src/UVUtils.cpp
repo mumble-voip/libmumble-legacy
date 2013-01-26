@@ -5,7 +5,13 @@
 #include "UVUtils.h"
 #include <mumble/Error.h>
 
+#include <uv.h>
+
 namespace mumble {
+
+bool UVUtils::IsCurrentThread(uv_thread_t thread) {
+	return uv_thread_self() == (unsigned long)thread;
+}
 
 Error UVUtils::ErrorFromLastUVError(uv_loop_t *loop) {
 	uv_err_t last = uv_last_error(loop);

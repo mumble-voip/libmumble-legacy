@@ -100,7 +100,7 @@ void TLSConnectionPrivate::TransitionToConnectionEstablishedState() {
 
 // Request TLSConnection to close its connection.
 void TLSConnectionPrivate::Disconnect() {
-	if (uv_thread_self() == static_cast<unsigned long>(thread_)) {
+	if (UVUtils::IsCurrentThread(thread_)) {
 		Shutdown(TLS_CONNECTION_STATE_DISCONNECTED_LOCAL);
 	} else {
 		uv_async_send(&dcasync_);
@@ -127,7 +127,7 @@ void TLSConnectionPrivate::ShutdownRemote() {
 void TLSConnectionPrivate::Write(const ByteArray &buf) {
 	// If called from within the runloop's thread, allow the operation
 	// to go through immediately.
-	if (uv_thread_self() == static_cast<unsigned long>(thread_)) {
+	if (UVUtils::IsCurrentThread(thread_)) {
 		int nread = SSL_write(ssl_, reinterpret_cast<const void *>(buf.ConstData()), buf.Length());
 		if (nread < 0) {
 			int SSLerr = SSL_get_error(ssl_, nread);
