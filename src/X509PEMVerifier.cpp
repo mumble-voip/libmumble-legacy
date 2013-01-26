@@ -7,6 +7,7 @@
 #include <mumble/X509Certificate.h>
 #include "X509Certificate_p.h"
 #include <mumble/ByteArray.h>
+#include "OpenSSLUtils.h"
 
 #include <iostream>
 #include <vector>
@@ -21,6 +22,7 @@
 namespace mumble {
 
 X509PEMVerifier::X509PEMVerifier() {
+	OpenSSLUtils::EnsureInitialized();
 	store_ = X509_STORE_new();
 }
 

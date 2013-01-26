@@ -58,17 +58,6 @@ bool SaveFile(const std::string &path, const mumble::ByteArray &ba) {
 }
 
 int main(int argc, char **argv) {
-	// Ensure OpenSSL is properly initialized
-	// during testing.
-	//
-	// fixme(mkrautz): This should happen
-	// automatically inside the library itself,
-	// but this will do for now.
-	SSL_library_init();
-	OpenSSL_add_all_algorithms();
-	ERR_load_crypto_strings();
-	SSL_load_error_strings();
-
 	testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
 }

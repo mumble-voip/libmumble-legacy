@@ -21,8 +21,8 @@
 				'3rdparty/openssl/include',
 			],
 			'sources': [
-				'src/Connection.cpp',
-				'src/Connection_p.cpp',
+				'src/TLSConnection.cpp',
+				'src/TLSConnection_p.cpp',
 				'src/UVBio.cpp',
 				'src/ByteArray.cpp',
 				'src/X509Certificate.cpp',
@@ -30,6 +30,10 @@
 				'src/X509PEMVerifier.cpp',
 				'src/X509Verifier_unix.cpp',
 				'src/X509HostnameVerifier.cpp',
+				'src/OpenSSLUtils.cpp',
+				'src/UVUtils.cpp',
+				'src/Error.cpp',
+				'src/Utils.cpp',
 			],
 			'conditions': [
 				['OS=="linux"', {
@@ -133,6 +137,37 @@
 					'sources': [
 						'src/Compat_android_test.cpp',
 					],
+				}],
+			],
+		},
+		{
+			'target_name':   'libmumble-demo',
+			'product_name':  'libmumble-demo',
+			'type':          'executable',
+			'cflags_cc':     ['-std=c++11'],
+			'dependencies':  [
+				'libmumble',
+			],
+			'include_dirs': [
+				'include',
+				'src',
+				'3rdparty/libuv/include',
+				'3rdparty/openssl/include',
+				'3rdparty/gtest/include',
+				'3rdparty/gtest',
+			],
+			'sources': [
+				'src/demo.cpp',
+			],
+			'conditions': [
+				['OS=="mac"', {
+					'xcode_settings': {
+						'CLANG_CXX_LANGUAGE_STANDARD': 'c++0x',
+						'CLANG_CXX_LIBRARY': 'libc++',
+					},
+				}],
+				['OS=="android"', {
+					'defines': ['__STDC_LIMIT_MACROS' ],
 				}],
 			],
 		},

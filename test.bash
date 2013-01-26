@@ -17,8 +17,8 @@ GYP=./gyp
 
 function xcode_build {
 	${GYP} libmumble.gyp -f xcode --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
-	xcodebuild -project test/libmumble.xcodeproj/ -target libmumble-test -configuration Default CONFIGURATION_BUILD_DIR=test/build || exit 1
-	./test/build/libmumble-test
+	xcodebuild -project test/libmumble.xcodeproj/ -target ${EXECUTABLE} -configuration Default CONFIGURATION_BUILD_DIR=test/build || exit 1
+	./test/build/${EXECUTABLE}
 }
 
 function msvs_build {
@@ -31,17 +31,17 @@ function msvs_build {
 function ninja_build {
 	${GYP} libmumble.gyp -f ninja --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
 	ninja -C test/out/Default || exit 1
-	./test/out/Default/libmumble-test
+	./test/out/Default/${EXECUTABLE}
 }
 
 function make_build {
 	${GYP} libmumble.gyp -f make --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
 	make -C test/ || exit 1
-	./test/out/Default/libmumble-test
+	./test/out/Default/${EXECUTABLE}
 }
 
 function android_build {
-	# Ensure the needed auto-geneated OpenSSL files are present.
+	# Ensure the needed auto-generated OpenSSL files are present.
 	cd 3rdparty/opensslbuild
 	./genconf.bash opensslconf-dist.h || exit 1
 	./genlinks.bash || exit 1
@@ -58,18 +58,23 @@ function android_build {
 	touch -r libmumble.gyp ./build/android/jni/Android.mk
 
 	cd ./build/android/jni
-	ndk-build || exit 1
+	ndk-build V=1 || exit 1
 	adb shell mkdir -p /sdcard/libmumble
 	adb shell su -c "umount /sdcard/libmumble"
 	adb shell su -c "mount -t tmpfs -o size=25m none /sdcard/libmumble"
-	adb push ../libs/armeabi/mumble-test /sdcard/libmumble/mumble-test
+	adb push "../libs/armeabi/${EXECUTABLE}" "/sdcard/libmumble/${EXECUTABLE}"
 	adb push ../../../testdata /sdcard/libmumble/testdata
-	adb shell "cd /sdcard/libmumble && ./mumble-test"
+	adb shell "cd /sdcard/libmumble && ./${EXECUTABLE}"
 }
 
 trap exit SIGINT SIGTERM
 
-if [ "${1}" == "android" ]; then
+EXECUTABLE="${1}"
+if [ "${EXECUTABLE}" == "" ]; then
+	EXECUTABLE="libmumble-test"
+fi
+
+if [ "${2}" == "android" ]; then
 	android_build
 	exit
 fi

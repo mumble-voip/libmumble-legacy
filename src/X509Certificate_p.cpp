@@ -4,6 +4,7 @@
 
 #include <mumble/X509Certificate.h>
 #include "X509Certificate_p.h"
+#include "OpenSSLUtils.h"
 
 #include <openssl/evp.h>
 #include <openssl/err.h>
@@ -28,6 +29,7 @@
 namespace mumble {
 
 X509CertificatePrivate::X509CertificatePrivate() {
+	OpenSSLUtils::EnsureInitialized();
 }
 
 void X509CertificatePrivate::ExtractCertificateInfo() {

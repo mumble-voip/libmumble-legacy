@@ -31,7 +31,7 @@ how to hook it up. Feel free to contribute, if this is something
 you need urgently.
 
 To build and test, run:
- $ ./test.bash android
+ $ ./test.bash libmumble-test android
 from the root of the source tree.
 
 This will build and run (via adb) the libmumble-test executable

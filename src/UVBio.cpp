@@ -86,8 +86,6 @@ int UVBioState::Read(BIO *b, char *buf, int len) {
 
 	// Get the front-most buffer
 	ByteArray ba = state->GetBuffer();
-	std::cerr << "ba length: " << ba.Length() << std::endl;
-
 	// Buffer is bigger than what the Read function
 	// has space for in its buffer.  Slice our buffer
 	// up, and give the Read function what it can take.
@@ -95,12 +93,10 @@ int UVBioState::Read(BIO *b, char *buf, int len) {
 		// Slice away the remaining part of the
 		// buffer and put it back into the queue.
 		ByteArray remain = ba.Slice(len);
-		std::cerr << "Remain = " << remain.Length() << std::endl;
 		state->PutOldBuffer(remain);
 		// Copy data from our original ByteArray
 		// into the Read functions buffer.
 		memcpy(buf, ba.Data(), len);
-		std::cerr << "Read returning len = " << len << std::endl;
 		return len;
 	// We have less space in our buffer than the Read
 	// function requested. Give the Read function what
@@ -118,8 +114,7 @@ int UVBioState::Read(BIO *b, char *buf, int len) {
 void UVBioState::WriteCallback(uv_write_t *req, int status) {
 	assert(req != NULL);
 
-	std::cerr << "WriteCallback!" << std::endl;
-
+	// todo(mkrautz): should we propagate write errors as errors to the TLSConnection?
 	if (status != 0) {
 		std::cerr << "UVBioState::WriteCallback status = " << status << std::endl;
 		return;
@@ -130,8 +125,6 @@ int UVBioState::Write(BIO *b, const char *buf, int len) {
 	UVBioState *state = static_cast<UVBioState *>(b->ptr);
 	uv_connect_t *connect = state->connect_;
 	uv_stream_t *stream = connect->handle;
-
-	std::cerr << "UVBIO_Write " << len << std::endl;
 
 	uv_write_t *req = static_cast<uv_write_t *>(calloc(sizeof(*req), 1));
 	uv_buf_t uvbuf;
@@ -147,8 +140,6 @@ int UVBioState::Write(BIO *b, const char *buf, int len) {
 		std::cerr << "uv_write failed!" << std::endl;
 		return -1;
 	}
-
-	std::cerr << "uv_write: wrote " << len << " bytes" << std::endl;
 
 	return len;
 }

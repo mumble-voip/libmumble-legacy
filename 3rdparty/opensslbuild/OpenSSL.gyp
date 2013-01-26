@@ -948,6 +948,7 @@
 			'dependencies': [
 				'generate-header-symlinks',
 				'generate-generic-opensslconf',
+				'libcrypto',
 			],
 			'include_dirs': [
 				'../openssl',

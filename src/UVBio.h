@@ -23,8 +23,6 @@ public:
 	~UVBioState();
 
 	void PutNewBuffer(ByteArray ba);
-
-private:
 	void PutOldBuffer(ByteArray ba);
 	bool HasBuffers();
 	ByteArray GetBuffer();
