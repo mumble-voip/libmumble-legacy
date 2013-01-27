@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include <queue>
+#include <functional>
 
 #include <mumble/ByteArray.h>
 #include <mumble/X509Certificate.h>

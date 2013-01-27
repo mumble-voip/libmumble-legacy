@@ -13,7 +13,6 @@ namespace mumble {
 
 class UVUtils {
 public:
-	static bool IsCurrentThread(uv_thread_t thread);
 	static Error ErrorFromLastUVError(uv_loop_t *loop);
 	static Error ErrorFromUVError(uv_err_t err);
 };

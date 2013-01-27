@@ -6,6 +6,8 @@
 #define MUMBLE_CONNECTION_P_H_
 
 #include <memory>
+#include <atomic>
+
 #include "uv.h"
 
 #include <openssl/ssl.h>
@@ -44,6 +46,8 @@ public:
 	uv_thread_t                       thread_;
 	uv_tcp_t                          tcpsock_;
 	uv_connect_t                      tcpconn_;
+
+	std::atomic<unsigned long>        thread_id_;
 
 	UVBioState                        *biostate_;
 

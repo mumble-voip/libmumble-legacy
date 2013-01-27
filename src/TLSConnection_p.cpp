@@ -24,7 +24,7 @@
 
 namespace mumble {
 
-TLSConnectionPrivate::TLSConnectionPrivate() {
+TLSConnectionPrivate::TLSConnectionPrivate() : thread_id_(0) {
 	OpenSSLUtils::EnsureInitialized();
 }
 
@@ -100,9 +100,11 @@ void TLSConnectionPrivate::TransitionToConnectionEstablishedState() {
 
 // Request TLSConnection to close its connection.
 void TLSConnectionPrivate::Disconnect() {
-	if (UVUtils::IsCurrentThread(thread_)) {
+	unsigned long us = uv_thread_self();
+	unsigned long it = thread_id_.load();
+	if (us == it) {
 		Shutdown(TLS_CONNECTION_STATE_DISCONNECTED_LOCAL);
-	} else {
+	} else if (it > 0) {
 		uv_async_send(&dcasync_);
 	}
 }
@@ -127,7 +129,9 @@ void TLSConnectionPrivate::ShutdownRemote() {
 void TLSConnectionPrivate::Write(const ByteArray &buf) {
 	// If called from within the runloop's thread, allow the operation
 	// to go through immediately.
-	if (UVUtils::IsCurrentThread(thread_)) {
+	unsigned long us = uv_thread_self();
+	unsigned long it = thread_id_.load();
+	if (us == it) {
 		int nread = SSL_write(ssl_, reinterpret_cast<const void *>(buf.ConstData()), buf.Length());
 		if (nread < 0) {
 			int SSLerr = SSL_get_error(ssl_, nread);
@@ -137,7 +141,7 @@ void TLSConnectionPrivate::Write(const ByteArray &buf) {
 		}
 	// If called from another thread, add it to the write queue and
 	// inform the runloop that there are new bytes to be written.
-	} else {
+	} else if (it > 0) {
 		uv_mutex_lock(&wqlock_);
 		wq_.push(buf);
 		uv_mutex_unlock(&wqlock_);
@@ -148,6 +152,8 @@ void TLSConnectionPrivate::Write(const ByteArray &buf) {
 void TLSConnectionPrivate::TLSConnectionThread(void *udata) {
 	TLSConnectionPrivate *cp = static_cast<TLSConnectionPrivate *>(udata);
 
+	cp->thread_id_.store(uv_thread_self());
+
 	uv_loop_t *loop = cp->loop_;
 	int err;
 
@@ -156,6 +162,8 @@ void TLSConnectionPrivate::TLSConnectionThread(void *udata) {
 		cp->state_ = TLS_CONNECTION_STATE_DISCONNECTED_ERROR;
 		cp->err_ = UVUtils::ErrorFromLastUVError(loop);
 	}
+
+	cp->thread_id_.store(0);
 
 	uv_loop_delete(loop);
 

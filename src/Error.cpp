@@ -11,10 +11,14 @@ namespace mumble {
 
 struct ErrorPrivate {
 public:
+	ErrorPrivate();
 	std::string  domain_;
 	std::string  description_;
 	long         code_;
 };
+
+ErrorPrivate::ErrorPrivate() : code_(0) {
+}
 
 Error Error::ErrorFromDescription(std::string domain, long code, std::string description) {
 	Error err;
