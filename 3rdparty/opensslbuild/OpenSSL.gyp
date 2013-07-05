@@ -832,6 +832,11 @@
 						'libraries!': [
 							'-lz',
 						],
+						'libraries': [
+							'-ladvapi32.lib',
+							'-luser32.lib',
+							'-lgdi32.lib',
+						],
 					},
 				}],
 				['openssl_asm=="gnuas-x86_64"', {

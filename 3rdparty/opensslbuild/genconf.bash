@@ -5,5 +5,6 @@
 
 trap exit SIGINT SIGTERM
 
-cat ${1} > ../openssl/crypto/opensslconf.h
-touch -r ${1} ../openssl/crypto/opensslconf.h 
+SCRIPT_DIR=$(dirname ${BASH_SOURCE})
+cat ${1} > ${SCRIPT_DIR}/../openssl/crypto/opensslconf.h
+touch -r ${1} ${SCRIPT_DIR}/../openssl/crypto/opensslconf.h 

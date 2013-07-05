@@ -20,6 +20,31 @@ This will generate build scripts suitable for your environment (Ninja,
 Make or an Xcode project on Macs). It'll perform a build and execute
 the libmumble-test binary, which runs the libmumble test suite.
 
+Building libmumble for Windows
+==============================
+
+To build libmumble on Windows, you'll need bash and perl. We recommend
+that these are acquired through Cygwin, and that you have Cygwin's bin
+folder in your global %PATH% (both the command prompt, and Visual Studio
+will expect there to 'bash' and 'perl' executables readily available).
+
+To generate a Visual Studio 2012 project file, simply execute:
+
+ c:\users\foo\libmumble> bash test.bash
+ MSVS project files have been written to the 'test' directory
+
+To open the test directory:
+ c:\users\foo\libmumble> explorer test
+
+And open libmumble.sln in Visual Studio 2012.
+
+Right click and select 'Build' for the libmumble-test executable to build
+the test suite.  When finished, you'll find a libmumble-test.exe executable
+in the test/Default directory.
+
+Don't have Visual Studio 2012? For now, gyp's MSVS target is set in test.bash,
+but we've only tested the build on 2012.
+
 Building libmumble for Android
 ==============================
 
