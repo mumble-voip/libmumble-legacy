@@ -22,9 +22,7 @@ function xcode_build {
 }
 
 function msvs_build {
-	export GYP_MSVS_VERSION=2012
-	python ${GYP} libmumble.gyp -f msvs --depth .. -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
-	echo "MSVS project files have been written to the 'test' directory"
+	cmd /k test.bat
 }
 
 function ninja_build {

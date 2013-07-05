@@ -23,27 +23,25 @@ the libmumble-test binary, which runs the libmumble test suite.
 Building libmumble for Windows
 ==============================
 
-To build libmumble on Windows, you'll need bash and perl. We recommend
-that these are acquired through Cygwin, and that you have Cygwin's bin
-folder in your global %PATH% (both the command prompt, and Visual Studio
-will expect there to 'bash' and 'perl' executables readily available).
+To build libmumble on Windows, you'll need Bash, Perl and Python.
 
-To generate a Visual Studio 2012 project file, simply execute:
+ * For Python, we recommend a native Windows install of Python 2.7,
+   and C:\Python27 in your %PATH%.
+ * For Bash and Perl, we recommend that they're acquired through Cygwin.
+ * We also recommend that your Cygwin bin folder is in your global %PATH%,
+   since the generated project files will depend on there being 'bash' and
+   'perl' executables readily available.
 
- c:\users\foo\libmumble> bash test.bash
- MSVS project files have been written to the 'test' directory
+When you're ready, simply execute:
 
-To open the test directory:
- c:\users\foo\libmumble> explorer test
+ c:\users\foo\libmumble> test.bat
 
-And open libmumble.sln in Visual Studio 2012.
+From the root of the source tree. This will generate the necessary Visual Studio
+projet files, run msbuild on the generated solution, and finally run the libmumble
+test suite.
 
-Right click and select 'Build' for the libmumble-test executable to build
-the test suite.  When finished, you'll find a libmumble-test.exe executable
-in the test/Default directory.
-
-Don't have Visual Studio 2012? For now, gyp's MSVS target is set in test.bash,
-but we've only tested the build on 2012.
+Don't have Visual Studio 2012? For now, gyp's MSVS target is set in test.bat,
+but please be aware that we've only tested the build using Visual Studio 2012.
 
 Building libmumble for Android
 ==============================
