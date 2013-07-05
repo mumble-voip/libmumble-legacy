@@ -942,6 +942,13 @@
 						'../openssl/crypto/rc4/rc4_skey.c',
 						'../openssl/crypto/bn/bn_asm.c',
 					],
+					'conditions': [
+						['OS=="win"', {
+							'includes': [
+								'../yasm/yasm_gnuas.gypi',
+							],
+						}],
+					],
 				}],
 			],
 		},

@@ -32,6 +32,11 @@ To build libmumble on Windows, you'll need Bash, Perl and Python.
    since the generated project files will depend on there being 'bash' and
    'perl' executables readily available.
 
+Besides the above, you'll also need a copy of YASM to build OpenSSL with
+assembly optimizations. Download the appropriate Windows executable from
+http://yasm.tortall.net/Download.html and drop it copy it to
+3rdparty/yasm/yasm.exe.
+
 When you're ready, simply execute:
 
  c:\users\foo\libmumble> test.bat

@@ -8,4 +8,5 @@ mumble-test
 mumble-demo
 rules.ninja
 3rdparty/opensslbuild/asm
+3rdparty/yasm/yasm.exe
 test/
