@@ -7,6 +7,7 @@
 #include "X509HostnameVerifier.h"
 #include <mumble/X509Certificate.h>
 #include "X509Certificate_p.h"
+#include "OpenSSLUtils.h"
 
 #include <vector>
 #include <string>
@@ -23,6 +24,7 @@ static uv_once_t    system_verifier_once_ = UV_ONCE_INIT;
 static X509Verifier *system_verifier_ptr_;
 
 void X509VerifierPrivate::InitializeSystemVerifier() {
+	OpenSSLUtils::EnsureInitialized();
 	system_verifier_ptr_ = new X509Verifier;
 }
 
