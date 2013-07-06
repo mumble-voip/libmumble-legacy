@@ -230,6 +230,8 @@ static int add_ext(X509 *crt, int nid, const char *value) {
 // Generate self-signed certificate with the given name and email address as a X509Certificate
 // object.
 X509Certificate X509CertificatePrivate::GenerateSelfSignedCertificate(const std::string &name, const std::string &email) {
+	OpenSSLUtils::EnsureInitialized();
+
 	CRYPTO_mem_ctrl(CRYPTO_MEM_CHECK_ON);
 
 	X509 *x509 = X509_new();
@@ -300,6 +302,8 @@ ByteArray X509CertificatePrivate::ExportCertificateChainAsPKCS12(std::vector<X50
 	const unsigned char *p;
 	ByteArray ba;
 
+	OpenSSLUtils::EnsureInitialized();
+
 	if (chain.empty()) {
 		return ByteArray();
 	}
@@ -362,6 +366,8 @@ std::vector<X509Certificate> X509CertificatePrivate::FromPKCS12(const ByteArray 
 	BIO *mem = nullptr;
 	STACK_OF(X509) *certs = nullptr;
 	int ret = 0;
+
+	OpenSSLUtils::EnsureInitialized();
 
 	if (pkcs12.IsNull()) {
 		return std::vector<X509Certificate>();
