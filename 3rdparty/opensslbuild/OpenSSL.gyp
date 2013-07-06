@@ -42,31 +42,6 @@
 						},
 					],
 				},
-				{
-					'target_name':  'generate-x86_64-opensslconf',
-					'type': 	    'none',
-					'actions': [
-						{
-							'action_name': 'genconf',
-							'conditions': [
-								['OS=="win"', {
-									'inputs': [
-										'opensslconf-x86_64-llp64.h',
-									],
-								}, {
-									'inputs': [
-										'opensslconf-x86_64.h',
-									],
-								}],
-							],
-							'outputs': [
-								'../openssl/crypto/opensslconf.h',
-							],
-							'action': [ 'bash', 'genconf.bash', '<@(_inputs)', ],
-							'msvs_cygwin_shell': 0,
-						},
-					],
-				},
 			]
 		}],
 		['openssl_asm=="gnuas-x86"', {
@@ -116,66 +91,15 @@
 						},
 					],
 				},
-				{
-					'target_name':  'generate-x86-opensslconf',
-					'type':         'none',
-					'actions': [
-						{
-							'action_name': 'genconf',
-							'inputs': [
-								'opensslconf-x86.h',
-							],
-							'outputs': [
-								'../openssl/crypto/opensslconf.h',
-							],
-							'action': [ 'bash', 'genconf.bash', '<@(_inputs)', ],
-							'msvs_cygwin_shell': 0,
-						},
-					],
-				},
 			],
 		}],
 	],
 	'targets': [
 		{
-			'target_name':  'generate-header-symlinks',
-			'type':         'none',
-			'actions': [
-				{
-					'action_name': 'genlinks',
-					'inputs': [],
-					'outputs': ['../3rdparty/openssl/include/openssl'],
-					'action': [ 'bash', 'genlinks.bash' ],
-					'msvs_cygwin_shell': 0,
-				},
-			],
-		},
-		{
-			'target_name':  'generate-generic-opensslconf',
-			'type':         'none',
-			'actions': [
-				{
-					'action_name': 'genconf',
-					'inputs': [
-						'opensslconf-dist.h',
-					],
-					'outputs': [
-						'../openssl/crypto/opensslconf.h',
-					],
-					'action': [ 'bash', 'genconf.bash', '<@(_inputs)', ],
-					'msvs_cygwin_shell': 0,
-				},
-			],
-		},
-		{
 			'target_name':  'libcrypto',
 			'product_name': 'crypto',
 			'type':         '<(library)',
 			'hard_dependency': 1,
-			'dependencies': [
-				'generate-header-symlinks',
-				'generate-generic-opensslconf',
-			],
 			'link_settings': {
 				'libraries': [
 					'-lz',
@@ -183,7 +107,7 @@
 			},
 			'include_dirs': [
 				'../openssl',
-				'../openssl/include',
+				'include',
 				'../openssl/crypto',
 				'../openssl/crypto/asn1',
 				'../openssl/crypto/evp',
@@ -851,11 +775,7 @@
 				}],
 				['openssl_asm=="gnuas-x86_64"', {
 					'dependencies': [
-						'generate-x86_64-opensslconf',
 						'generate-gnuas-x86_64-assembly',
-					],
-					'dependencies!': [
-						'generate-generic-opensslconf',
 					],
 					'defines': [
 						'OPENSSL_CPUID_OBJ=1',
@@ -869,6 +789,7 @@
 				 		'MD5_ASM=1',
 				 		'AES_ASM=1',
 				 		'WHIRLPOOL_ASM=1',
+				 		'LIBMUMBLE_OPENSSLCONF_X86_64=1',
 					],
 					'defines!': [
 						'OPENSSL_NO_ASM=1',
@@ -902,16 +823,18 @@
 							'includes': [
 								'../yasm/yasm_gnuas.gypi',
 							],
+							'defines': [
+				 				'LIBMUMBLE_OPENSSLCONF_X86_64_LLP=1',
+							],
+							'defines!': [
+								'LIBMUMBLE_OPENSSLCONF_X86_64=1',
+							],
 						}],
 					],
 				}],
 				['openssl_asm=="gnuas-x86"', {
 					'dependencies': [
-						'generate-x86-opensslconf',
 						'generate-gnuas-x86-assembly',
-					],
-					'dependencies!': [
-						'generate-generic-opensslconf',
 					],
 					'defines': [
 						'OPENSSL_CPUID_OBJ=1',
@@ -924,6 +847,7 @@
 				 		'SHA512_ASM=1',
 				 		'MD5_ASM=1',
 				 		'AES_ASM=1',
+				 		'LIBMUMBLE_OPENSSLCONF_X86=1'
 					],
 					'defines!': [
 						'OPENSSL_NO_ASM=1',
@@ -975,13 +899,11 @@
 			'type':         '<(library)',
 			'hard_dependency': 1,
 			'dependencies': [
-				'generate-header-symlinks',
-				'generate-generic-opensslconf',
 				'libcrypto',
 			],
 			'include_dirs': [
 				'../openssl',
-				'../openssl/include',
+				'include',
 				'../openssl/crypto',
 				'../openssl/crypto/asn1',
 				'../openssl/crypto/evp',
@@ -1048,22 +970,6 @@
 				['"<(library)" == "shared_library"', {
 					'cflags': [ '-fPIC' ],
 					'ldflags': [ '-Wl,-Bsymbolic' ],
-				}],
-				['openssl_asm=="gnuas-x86_64"', {
-					'dependencies': [
-						'generate-x86_64-opensslconf',
-					],
-					'dependencies!': [
-						'generate-generic-opensslconf',
-					],
-				}],
-				['openssl_asm=="gnuas-x86"', {
-					'dependencies': [
-						'generate-x86-opensslconf',
-					],
-					'dependencies!': [
-						'generate-generic-opensslconf',
-					],
 				}],
 				['OS=="win"', {
 					'defines': [
