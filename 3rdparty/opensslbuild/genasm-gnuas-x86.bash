@@ -5,7 +5,12 @@
 
 trap exit SIGINT SIGTERM
 
-SCRIPT_DIR=$(dirname ${BASH_SOURCE})
+FN=${BASH_SOURCE}
+type -P cygpath 2>&1 >/dev/null
+if [ $? -eq 0 ]; then
+	FN=$(cygpath -u "${FN}")
+fi
+SCRIPT_DIR=$(dirname ${FN})
 
 mkdir -p ${SCRIPT_DIR}/asm/gnuas/crypto/aes/asm
 mkdir -p ${SCRIPT_DIR}/asm/gnuas/crypto/cast/asm

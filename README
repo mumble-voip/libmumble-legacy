@@ -44,6 +44,13 @@ From the root of the source tree. This will generate the necessary Visual Studio
 projet files, run msbuild on the generated solution, and finally run the libmumble
 test suite.
 
+Note that by default, test.bat will build an x64 binary on Windows with OpenSSL
+assembly enabled. If you wish to target something else, you can change the values
+of -Dopenssl_asm=gnuas-x86_64 -Dtarget_arch=x64. For example, to build for 32-bit
+x86 with ASM, you can use the following set of options:
+
+  -Dopenssl_asm= -Dtarget_arch=ia32
+
 Don't have Visual Studio 2012? For now, gyp's MSVS target is set in test.bat,
 but please be aware that we've only tested the build using Visual Studio 2012.
 

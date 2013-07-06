@@ -35,7 +35,9 @@
 								'asm/gnuas/crypto/rc4/asm/rc4-x86_64.S',
 								'asm/gnuas/crypto/bn/asm/x86_64-mont.S',
 							],
-							'action': [ 'bash', 'genasm-gnuas-x86_64.bash' ],
+							# fixme: prefix the variable with $ to work around a gyp bug
+							# that attempts to expand our variable to a filesystem path.
+							'action': [ 'bash', 'genasm-gnuas-x86_64.bash', '$<(OS)' ],
 							'msvs_cygwin_shell': 0,
 						},
 					],
@@ -46,8 +48,16 @@
 					'actions': [
 						{
 							'action_name': 'genconf',
-							'inputs': [
-								'opensslconf-x86_64.h',
+							'conditions': [
+								['OS=="win"', {
+									'inputs': [
+										'opensslconf-x86_64-llp64.h',
+									],
+								}, {
+									'inputs': [
+										'opensslconf-x86_64.h',
+									],
+								}],
 							],
 							'outputs': [
 								'../openssl/crypto/opensslconf.h',
@@ -886,6 +896,13 @@
 						'../openssl/crypto/rc4/rc4_enc.c',
 						'../openssl/crypto/rc4/rc4_skey.c',
 						'../openssl/crypto/bn/bn_asm.c',
+					],
+					'conditions': [
+						['OS=="win"', {
+							'includes': [
+								'../yasm/yasm_gnuas.gypi',
+							],
+						}],
 					],
 				}],
 				['openssl_asm=="gnuas-x86"', {
