@@ -33,7 +33,7 @@ function mksymlink {
 
 FN=\${BASH_SOURCE}
 type -P cygpath 2>&1 >/dev/null
-if [ $? -eq 0 ]; then
+if [ \$? -eq 0 ]; then
 	FN=\$(cygpath -u "\${FN}")
 fi
 SCRIPT_DIR=\$(dirname \${FN})
