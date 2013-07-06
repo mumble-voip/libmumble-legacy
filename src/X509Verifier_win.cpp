@@ -141,15 +141,17 @@ WCHAR *X509VerifierPrivate::UTF16StringFromStdString(const std::string &str) con
 // VerifyChain verifies the certificate chain in chain
 // according to the verification options given as opts.
 bool X509VerifierPrivate::VerifyChain(std::vector<X509Certificate> chain, const X509VerifierOptions &opts) {
-	bool status = false;
-	FILETIME verify_time;
+	const CERT_CHAIN_CONTEXT *chain_ctx = nullptr;
+	const CERT_CONTEXT *store_ctx = nullptr;
 	WCHAR *wide_dns_name = nullptr;
+	FILETIME verify_time;
+	bool status = false;
 
 	if (chain.empty()) {
 		goto out;
 	}
 
-	const CERT_CONTEXT *store_ctx = this->CreateCertContextFromChain(chain);
+	store_ctx = this->CreateCertContextFromChain(chain);
 	if (store_ctx == nullptr) {
 		goto out;
 	}
@@ -174,7 +176,6 @@ bool X509VerifierPrivate::VerifyChain(std::vector<X509Certificate> chain, const 
 		para.RequestedUsage.Usage.rgpszUsageIdentifier = nullptr;
 	}
 
-	const CERT_CHAIN_CONTEXT *chain_ctx = nullptr;
 	verify_time = this->FileTimeFromStdTimeT(opts.time);
 	bool ok = CertGetCertificateChain(nullptr, store_ctx, (opts.time != 0) ? &verify_time : nullptr, store_ctx->hCertStore, &para, 0, nullptr, &chain_ctx);
 	if (!ok) {
