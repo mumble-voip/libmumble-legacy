@@ -9,8 +9,12 @@ mumble-demo
 rules.ninja
 3rdparty/yasm/yasm.exe
 test/
+
+# Android NDK build files.
+# These can be cleaned up by running
+# build/android/cleanup.bash from the root of the source tree.
 build/android/libs
 build/android/obj
-build/android/jni/Android.mk
-build/android/jni/libmumble*.mk
 build/android/jni/3rdparty
+build/android/jni/Android.mk
+build/android/jni/*.target.mk
