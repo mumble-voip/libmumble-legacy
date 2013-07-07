@@ -58,17 +58,17 @@ Building libmumble for Android
 ==============================
 
 It's possible to build libmumble for Android. Currently,
-the only thing that really runs is the libmumble-test executable.
+the only thing that really runs is the mumble-test executable.
 
 Can you use the library in an app? Probably. But I don't know
 how to hook it up. Feel free to contribute, if this is something
 you need urgently.
 
 To build and test, run:
- $ ./test.bash libmumble-test android
+ $ ./test.bash mumble-test android
 from the root of the source tree.
 
-This will build and run (via adb) the libmumble-test executable
+This will build and run (via adb) the mumble-test executable
 on a conneted Android device. You should probably only have a
 single device connected at a time for this to work - the script
 isn't too considerate of other scenarios.

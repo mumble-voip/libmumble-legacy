@@ -9,4 +9,4 @@
 	url = git://openssl.net/openssl
 [submodule "3rdparty/gyp"]
 	path = 3rdparty/gyp
-	url = git://github.com/mkrautz/gyp-libmumble.git
+	url = git://github.com/mumble-voip/libmumble-gyp.git
