@@ -13,5 +13,16 @@
 				],
 			}],
 		],
+		'conditions': [
+			['OS == "mac"', {
+				'target_conditions': [
+					['target_arch=="x64"', {
+						'xcode_settings': {
+							'ARCHS': 'x86_64',
+						},
+					}],
+				],
+			}],
+		],
 	},
 }

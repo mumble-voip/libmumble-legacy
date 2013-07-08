@@ -14,9 +14,10 @@
 # system).
 
 GYP=./gyp
+GYPFLAGS="-I common.gypi"
 
 function xcode_build {
-	${GYP} libmumble.gyp -f xcode --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
+	${GYP} libmumble.gyp ${GYPFLAGS} -f xcode --depth . -Dlibrary=static_library -Dopenssl_asm= -Dtarget_arch=x64 --generator-out=test
 	xcodebuild -project test/libmumble.xcodeproj/ -target ${EXECUTABLE} -configuration Default CONFIGURATION_BUILD_DIR=test/build || exit 1
 	./test/build/${EXECUTABLE}
 }
@@ -26,13 +27,13 @@ function msvs_build {
 }
 
 function ninja_build {
-	${GYP} libmumble.gyp -f ninja --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
+	${GYP} libmumble.gyp ${GYPFLAGS} -f ninja --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
 	ninja -C test/out/Default || exit 1
 	./test/out/Default/${EXECUTABLE}
 }
 
 function make_build {
-	${GYP} libmumble.gyp -f make --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
+	${GYP} libmumble.gyp ${GYPFLAGS} -f make --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
 	make -C test/ || exit 1
 	./test/out/Default/${EXECUTABLE}
 }
