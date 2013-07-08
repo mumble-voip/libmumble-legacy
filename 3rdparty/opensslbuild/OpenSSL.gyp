@@ -880,6 +880,25 @@
 						}],
 					],
 				}],
+				['openssl_asm=="gnuas-arm"', {
+					'defines': [
+				 		'OPENSSL_BN_ASM_MONT=1',
+				 		'SHA1_ASM=1',
+				 		'SHA256_ASM=1',
+				 		'SHA512_ASM=1',
+				 		'LIBMUMBLE_OPENSSLCONF_ARM=1'
+					],
+					'defines!': [
+						'OPENSSL_NO_ASM=1',
+					],
+					'sources': [
+						'asm/gnuas-arm-elf/crypto/aes/asm/aes-armv4.S',
+						'asm/gnuas-arm-elf/crypto/bn/asm/armv4-mont.S',
+						'asm/gnuas-arm-elf/crypto/sha/asm/sha1-armv4-large.S',
+						'asm/gnuas-arm-elf/crypto/sha/asm/sha256-armv4.S',
+						'asm/gnuas-arm-elf/crypto/sha/asm/sha512-armv4.S',
+					],
+				}],
 			],
 		},
 		{

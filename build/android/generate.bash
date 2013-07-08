@@ -7,4 +7,4 @@
 # Must be run from the root of the source tree.
 GYP=./gyp
 GYPFLAGS="-I common.gypi"
-${GYP} libmumble.gyp ${GYPFLAGS} -f android -G android_ndk_version=1 --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=build/android/jni
+${GYP} libmumble.gyp ${GYPFLAGS} -f android -G android_ndk_version=1 --depth . -Dlibrary=static_library -Dopenssl_asm=gnuas-arm --generator-out=build/android/jni

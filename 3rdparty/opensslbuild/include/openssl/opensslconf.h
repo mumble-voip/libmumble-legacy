@@ -8,6 +8,8 @@
 # include "../../opensslconf-x86_64.h"
 #elif LIBMUMBLE_OPENSSLCONF_X86_64_LLP == 1
 # include "../../opensslconf-x86_64-llp64.h"
+#elif LIBMUMBLE_OPENSSLCONF_ARM == 1
+# include "../../opensslconf-arm.h"
 #else
 # include "../../opensslconf-dist.h"
 #endif

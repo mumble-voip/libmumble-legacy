@@ -54,6 +54,14 @@ rm crypto/opensslconf.h
 writehdr "./Configure mingw64" ../opensslbuild/opensslconf-x86_64-llp64.h
 tail -n+4 crypto/opensslconf.h | sed 's,#define OPENSSL_CPUID_OBJ,,' >> ../opensslbuild/opensslconf-x86_64-llp64.h
 
+# ARM
+git clean -dfx
+git reset --hard
+rm crypto/opensslconf.h
+./Configure linux-armv4
+writehdr "./Configure linux-armv4" ../opensslbuild/opensslconf-arm.h
+tail -n+4 crypto/opensslconf.h | sed 's,#define OPENSSL_CPUID_OBJ,,' >> ../opensslbuild/opensslconf-arm.h
+
 # final cleanup
 git clean -dfx
 git reset --hard
