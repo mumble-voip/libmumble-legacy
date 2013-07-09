@@ -59,6 +59,12 @@ function android_build {
 	adb shell "cd /sdcard/libmumble && ./${EXECUTABLE}"
 }
 
+function iphoneos_build {
+	./build/iphoneos/generate.bash
+	cd ./build/iphoneos/xcode
+	xcodebuild -project libmumble.xcodeproj -target ${EXECUTABLE} -configuration Default CONFIGURATION_BUILD_DIR=test/build
+}
+
 trap exit SIGINT SIGTERM
 
 EXECUTABLE="${1}"
@@ -68,6 +74,11 @@ fi
 
 if [ "${2}" == "android" ]; then
 	android_build
+	exit
+fi
+
+if [ "${2}" == "iphoneos" ]; then
+	iphoneos_build
 	exit
 fi
 

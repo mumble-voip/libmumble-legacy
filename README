@@ -84,3 +84,20 @@ libmumble test data and test executable will live and execute from.
 The test.bash script also expects that you have the
 <ANDROID_SDK>/platform-tools and <ANDROID_NDK> paths in your PATH
 environment variable.
+
+Building libmumble for iOS
+==========================
+
+It's also possible to build libmumble for iOS. You can generate an
+.xcodeproj hierarchy by running ./build/iphoneos/generate.bash, and
+the generated Xcode project files will be written to
+
+  build/iphoneos/xcode
+
+To build the libmumble-test app (the only app that really runs at the moment),
+simply open libmumble.xcodeproj, select the 'libmumble-test' target, and your
+target device in the target/device picker, and click Run.
+
+Note: You may need to ensure you have a provisioning profile for 'info.mumble.libmumble-test'
+installed before trying this. If you can't create a provisioning profile with that name,
+feel free to change the bundle identifier in build/iphoneos/test-bundle/Info.plist.

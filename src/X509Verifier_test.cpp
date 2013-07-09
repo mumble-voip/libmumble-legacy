@@ -121,7 +121,7 @@ TEST(X509Verifier, TestSelfSignedServerCert) {
 	opts.dns_name = std::string("mumble.example.com");
 	opts.time = 1356882805; // Sun, 30 Dec 2012 15:53:25 GMT
 
-	mumble::ByteArray cert_der = LoadFile(std::string("testdata/x509/selfsign-server/self.crt"));
+	mumble::ByteArray cert_der = LoadFile(std::string("testdata/x509/selfsign-server/selfsign-server.crt"));
 	ASSERT_FALSE(cert_der.IsNull());
 
 	mumble::X509Certificate cert = mumble::X509Certificate::FromRawDERData(cert_der);

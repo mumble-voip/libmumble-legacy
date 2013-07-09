@@ -62,6 +62,26 @@
 						'src/X509Verifier_mac.mm',
 					],
 				}],
+				['OS=="ios"', {
+					'defines': ['LIBMUMBLE_OS_IOS'],
+					'xcode_settings': {
+						'CLANG_CXX_LANGUAGE_STANDARD': 'c++0x',
+						'CLANG_CXX_LIBRARY': 'libc++',
+					},
+					'link_settings': {
+						'libraries': [
+							'$(SDKROOT)/System/Library/Frameworks/Foundation.framework',
+							'$(SDKROOT)/System/Library/Frameworks/Security.framework',
+							'$(SDKROOT)/System/Library/Frameworks/CoreFoundation.framework',
+						],
+					},
+					'sources!': [
+						'src/X509Verifier_unix.cpp',
+					],
+					'sources': [
+						'src/X509Verifier_mac.mm',
+					],
+				}],
 				['OS=="win"', {
 					'defines': [ 'LIBMUMBLE_OS_WINDOWS' ],
 					'link_settings': {
@@ -121,6 +141,36 @@
 					'defines': [
 						'GTEST_HAS_TR1_TUPLE=0',
 						'GTEST_USE_OWN_TR1_TUPLE=1',
+					],
+				}],
+				['OS=="ios"', {
+					'product_extension': 'app',
+					'mac_bundle': 1,
+					'xcode_settings': {
+						'CLANG_CXX_LANGUAGE_STANDARD': 'c++0x',
+						'CLANG_CXX_LIBRARY': 'libc++',
+						'OTHER_CFLAGS': [
+							'-fobjc-abi-version=2', # required for iphonesimulator to work as expected.
+						],
+						'INFOPLIST_FILE': 'build/iphoneos/test-bundle/Info.plist',
+					},
+					'mac_bundle_resources': [
+						'<!@(find testdata -type f)',
+					],
+					'defines': [
+						'LIBMUMBLE_OS_IOS=1',
+						'GTEST_HAS_TR1_TUPLE=0',
+						'GTEST_USE_OWN_TR1_TUPLE=1',
+					],
+					'include_dirs': [
+						'3rdparty/gtestbuild/ios/include',
+					],
+					'sources': [
+						'src/mumble_test.mm',
+						'3rdparty/gtestbuild/ios/crt_externs.c',
+					],
+					'sources!': [
+						'src/mumble_test.cpp',
 					],
 				}],
 				['OS=="win"', {

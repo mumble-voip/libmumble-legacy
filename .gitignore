@@ -18,3 +18,6 @@ build/android/obj
 build/android/jni/3rdparty
 build/android/jni/Android.mk
 build/android/jni/*.target.mk
+
+# iOS build files.
+build/iphoneos/xcode

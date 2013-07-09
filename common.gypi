@@ -12,8 +12,6 @@
 					}],
 				],
 			}],
-		],
-		'conditions': [
 			['OS == "mac"', {
 				'target_conditions': [
 					['target_arch=="x64"', {
@@ -22,6 +20,12 @@
 						},
 					}],
 				],
+			}],
+			['OS == "ios"', {
+				'xcode_settings': {
+					'SDKROOT': 'iphoneos',
+					'IPHONEOS_DEPLOYMENT_TARGET': '5.0',
+				},
 			}],
 		],
 	},

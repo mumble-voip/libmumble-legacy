@@ -8,3 +8,6 @@ with the following modifications:
    Please use the diff-uv.gyp.bash script provided in this
    directory to see the true diff of all the modifications
    listed below this one (if any).
+
+ * A small set of changes to allow use of -DOS=ios for generation
+   of .xcodeprojs compatible with iOS.

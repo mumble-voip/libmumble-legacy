@@ -23,11 +23,22 @@
 // Let's just include it here instead.
 #include "src/gtest-all.cc"
 
+#if LIBMUMBLE_OS_IOS == 1
+#import <Foundation/Foundation.h>
+#endif
+
 mumble::ByteArray LoadFile(const std::string &path) {
+#if LIBMUMBLE_OS_IOS == 1
+	std::string basename = path.substr(path.rfind("/")+1);
+	NSString *absFn = [[NSBundle mainBundle] pathForResource:@(basename.c_str()) ofType:nil];
+	NSData *data = [NSData dataWithContentsOfFile:absFn];
+	return mumble::ByteArray(const_cast<char *>(reinterpret_cast<const char *>([data bytes])),
+							 static_cast<int>([data length]));
+#else
 	mumble::ByteArray ba;
 
 	std::ifstream ifs;
-	ifs.open(path, std::ios::binary);
+	ifs.open(path, std::ifstream::binary);
 
 	while (ifs.good()) {
 		mumble::ByteArray chunk(256);
@@ -42,6 +53,7 @@ mumble::ByteArray LoadFile(const std::string &path) {
 	ifs.close();
 
 	return ba;
+#endif
 }
 
 bool SaveFile(const std::string &path, const mumble::ByteArray &ba) {

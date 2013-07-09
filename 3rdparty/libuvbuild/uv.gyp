@@ -49,7 +49,7 @@
               '_FILE_OFFSET_BITS=64',
             ],
           }],
-          ['OS == "mac"', {
+          ['OS in "mac ios".split()', {
             'defines': [ '_DARWIN_USE_64_BIT_INODE=1' ],
           }],
           ['OS == "linux"', {
@@ -201,8 +201,22 @@
             '_DARWIN_USE_64_BIT_INODE=1',
           ]
         }],
-        [ 'OS!="mac"', {
-          # Enable on all platforms except OS X. The antique gcc/clang that
+        [ 'OS=="ios"', {
+          'sources': [
+            '../libuv/src/unix/darwin.c',
+            '../libuv/src/unix/fsevents.c',
+          ],
+          'link_settings': {
+            'libraries': [
+              '$(SDKROOT)/System/Library/Frameworks/Foundation.framework',
+            ],
+          },
+          'defines': [
+            '_DARWIN_USE_64_BIT_INODE=1',
+          ]
+        }],
+        [ 'OS not in "mac ios".split()', {
+          # Enable on all platforms except OS X/iOS. The antique gcc/clang that
           # ships with Xcode emits waaaay too many false positives.
           'cflags': [ '-Wstrict-aliasing' ],
         }],
@@ -271,7 +285,7 @@
             'libraries': [ '-lkvm' ],
           },
         }],
-        [ 'OS in "mac freebsd dragonflybsd openbsd netbsd".split()', {
+        [ 'OS in "mac ios freebsd dragonflybsd openbsd netbsd".split()', {
           'sources': [ '../libuv/src/unix/kqueue.c' ],
         }],
         ['library=="shared_library"', {

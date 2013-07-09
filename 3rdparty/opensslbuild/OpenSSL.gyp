@@ -645,7 +645,7 @@
 				}],
 				# The xcodeproj generator requires we explicitly
 				# spell out libraries.
-				['OS=="mac"', {
+				['OS=="mac" or OS=="ios"', {
 					'link_settings': {
 						'libraries': [
 							'/usr/lib/libz.dylib',
