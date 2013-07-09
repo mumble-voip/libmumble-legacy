@@ -10,7 +10,7 @@
 			'type':         'static_library',
 			'cflags_cc':    ['-std=c++11'],
 			'dependencies': [
-				'3rdparty/libuv/uv.gyp:libuv',
+				'3rdparty/libuvbuild/uv.gyp:libuv',
 				'3rdparty/opensslbuild/OpenSSL.gyp:libcrypto',
 				'3rdparty/opensslbuild/OpenSSL.gyp:libssl',
 			],

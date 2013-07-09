@@ -1,0 +1,10 @@
+The uv.gyp file in this directory is a copy of 3rdparty/libuv
+with the following modifications:
+
+ * All paths are changed to be relative to 3rdparty/libuvbuild
+   instead of 3rdparty/libuv. This is a big change, and a lot
+   of noise.
+
+   Please use the diff-uv.gyp.bash script provided in this
+   directory to see the true diff of all the modifications
+   listed below this one (if any).
