@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
 	uv_timer_init(loop, &timer);
 	uv_timer_start(&timer, timerFunc, 1000, 1000);
 
-	if (uv_run(loop) == -1) {
+	if (uv_run(loop, UV_RUN_DEFAULT) == -1) {
 		std::cerr << "got error: " << uv_strerror(uv_last_error(loop)) << std::endl;
 	}
 }

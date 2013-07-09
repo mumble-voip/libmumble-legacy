@@ -157,7 +157,7 @@ void TLSConnectionPrivate::TLSConnectionThread(void *udata) {
 	uv_loop_t *loop = cp->loop_;
 	int err;
 
-	err = uv_run(loop);
+	err = uv_run(loop, UV_RUN_DEFAULT);
 	if (err != UV_OK) {
 		cp->state_ = TLS_CONNECTION_STATE_DISCONNECTED_ERROR;
 		cp->err_ = UVUtils::ErrorFromLastUVError(loop);
