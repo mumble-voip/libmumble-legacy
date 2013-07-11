@@ -24,4 +24,7 @@ trap exit SIGINT SIGTERM
 ./genasm-gnuas-x86_64.bash macosx
 
 # Generate gnuas-arm-elf
-./genasm-gnuas-arm.bash
+./genasm-gnuas-arm.bash elf
+
+# Generate gnuas-arm-macosx
+./genasm-gnuas-arm.bash macosx

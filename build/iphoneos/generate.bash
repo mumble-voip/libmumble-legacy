@@ -18,4 +18,4 @@ fi
 
 GYP=./gyp
 GYPFLAGS="-I common.gypi"
-${GYP} libmumble.gyp ${GYPFLAGS} -f xcode --depth . -Dlibrary=static_library -Dopenssl_asm= -DOS=ios --generator-out=build/iphoneos/xcode
+${GYP} libmumble.gyp ${GYPFLAGS} -f xcode --depth . -Dlibrary=static_library -Dopenssl_asm=gnuas-arm -DOS=ios --generator-out=build/iphoneos/xcode

@@ -882,6 +882,7 @@
 				}],
 				['openssl_asm=="gnuas-arm"', {
 					'defines': [
+						'AES_ASM=1',
 				 		'OPENSSL_BN_ASM_MONT=1',
 				 		'SHA1_ASM=1',
 				 		'SHA256_ASM=1',
@@ -897,6 +898,26 @@
 						'asm/gnuas-arm-elf/crypto/sha/asm/sha1-armv4-large.S',
 						'asm/gnuas-arm-elf/crypto/sha/asm/sha256-armv4.S',
 						'asm/gnuas-arm-elf/crypto/sha/asm/sha512-armv4.S',
+					],
+					'conditions': [
+						['OS=="ios"', {
+							'defines!': [
+								'AES_ASM=1',
+							],
+							'sources': [
+								'asm/gnuas-arm-macosx/crypto/bn/asm/armv4-mont.S',
+								'asm/gnuas-arm-macosx/crypto/sha/asm/sha1-armv4-large.S',
+								'asm/gnuas-arm-macosx/crypto/sha/asm/sha256-armv4.S',
+								'asm/gnuas-arm-macosx/crypto/sha/asm/sha512-armv4.S',
+							],
+							'sources!': [
+								'asm/gnuas-arm-elf/crypto/aes/asm/aes-armv4.S',
+								'asm/gnuas-arm-elf/crypto/bn/asm/armv4-mont.S',
+								'asm/gnuas-arm-elf/crypto/sha/asm/sha1-armv4-large.S',
+								'asm/gnuas-arm-elf/crypto/sha/asm/sha256-armv4.S',
+								'asm/gnuas-arm-elf/crypto/sha/asm/sha512-armv4.S',
+							],
+						}],
 					],
 				}],
 			],
