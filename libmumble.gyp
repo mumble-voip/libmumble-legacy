@@ -216,6 +216,18 @@
 						'CLANG_CXX_LIBRARY': 'libc++',
 					},
 				}],
+				['OS=="ios"', {
+					'product_extension': 'app',
+					'mac_bundle': 1,
+					'xcode_settings': {
+						'CLANG_CXX_LANGUAGE_STANDARD': 'c++0x',
+						'CLANG_CXX_LIBRARY': 'libc++',
+						'OTHER_CFLAGS': [
+							'-fobjc-abi-version=2', # required for iphonesimulator to work as expected.
+						],
+						'INFOPLIST_FILE': 'build/iphoneos/demo-bundle/Info.plist',
+					},
+				}],
 				['OS=="android"', {
 					'defines': ['__STDC_LIMIT_MACROS' ],
 				}],
