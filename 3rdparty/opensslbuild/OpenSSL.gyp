@@ -700,6 +700,11 @@
 					'defines!': [
 						'OPENSSL_NO_ASM=1',
 					],
+					'direct_dependent_settings': {
+						'defines': [
+							'LIBMUMBLE_OPENSSLCONF_X86_64=1',
+						],
+					},
 					'sources': [
 						'asm/gnuas-x86_64-elf/crypto/x86_64cpuid.S',
 						'asm/gnuas-x86_64-elf/crypto/aes/asm/aes-x86_64.S',
@@ -735,6 +740,14 @@
 							'defines!': [
 								'LIBMUMBLE_OPENSSLCONF_X86_64=1',
 							],
+							'direct_dependent_settings': {
+								'defines': [
+									'LIBMUMBLE_OPENSSLCONF_X86_64_LLP=1',
+								],
+								'defines!': [
+									'LIBMUMBLE_OPENSSLCONF_X86_64=1',
+								],
+							},
 							'sources': [
 								'asm/gnuas-x86_64-mingw64/crypto/x86_64cpuid.S',
 								'asm/gnuas-x86_64-mingw64/crypto/aes/asm/aes-x86_64.S',
@@ -805,6 +818,11 @@
 					'defines!': [
 						'OPENSSL_NO_ASM=1',
 					],
+					'direct_dependent_settings': {
+						'defines': [
+							'LIBMUMBLE_OPENSSLCONF_X86=1',
+						],
+					},
 					'sources': [
 						'asm/gnuas-x86-elf/crypto/x86cpuid.S',
 						'asm/gnuas-x86-elf/crypto/bn/asm/aes-586.S',
@@ -892,6 +910,11 @@
 					'defines!': [
 						'OPENSSL_NO_ASM=1',
 					],
+					'direct_dependent_settings': {
+						'defines': [
+							'LIBMUMBLE_OPENSSLCONF_ARM=1',
+						],
+					},
 					'sources': [
 						'asm/gnuas-arm-elf/crypto/aes/asm/aes-armv4.S',
 						'asm/gnuas-arm-elf/crypto/bn/asm/armv4-mont.S',
