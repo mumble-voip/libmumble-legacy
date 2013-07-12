@@ -129,9 +129,7 @@
           'type': 'none',
           'direct_dependent_settings': {
             'cflags': [
-              # Use full protobuf, because vanilla protobuf doesn't have
-              # our custom patch to retain unknown fields in lite mode.
-              '<!@(pkg-config --cflags protobuf)',
+              '<!@(pkg-config --cflags protobuf-lite)',
             ],
             'defines': [
               'USE_SYSTEM_PROTOBUF',
@@ -143,13 +141,11 @@
             ],
           },
           'link_settings': {
-            # Use full protobuf, because vanilla protobuf doesn't have
-            # our custom patch to retain unknown fields in lite mode.
             'ldflags': [
-              '<!@(pkg-config --libs-only-L --libs-only-other protobuf)',
+              '<!@(pkg-config --libs-only-L --libs-only-other protobuf-lite)',
             ],
             'libraries': [
-              '<!@(pkg-config --libs-only-l protobuf)',
+              '<!@(pkg-config --libs-only-l protobuf-lite)',
             ],
           },
         },
