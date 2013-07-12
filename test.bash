@@ -27,7 +27,7 @@ function msvs_build {
 }
 
 function ninja_build {
-	${GYP} libmumble.gyp ${GYPFLAGS} -f ninja --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
+	${GYP} libmumble.gyp ${GYPFLAGS} -f ninja --depth . -Dlibrary=static_library -Dopenssl_asm= --generator-out=test
 	ninja -C test/out/Default || exit 1
 	./test/out/Default/${EXECUTABLE}
 }

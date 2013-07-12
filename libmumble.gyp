@@ -22,8 +22,6 @@
 				'3rdparty/opensslbuild/include',
 			],
 			'sources': [
-				'proto/Mumble.pb.cpp',
-				'proto/Mumble.pb.h',
 				'src/TLSConnection.cpp',
 				'src/TLSConnection_p.cpp',
 				'src/UVBio.cpp',
@@ -39,16 +37,17 @@
 				'src/Utils.cpp',
 			],
 			'conditions': [
-				['use_system_protobuf==1', {
-					'includes': [
-						'3rdparty/protobufbuild/protoc.gypi',
-					],
-					'sources!': [
-						'proto/Muble.pb.cpp',
+				['use_system_protobuf==0', {
+					'sources': [
+						'proto/Mumble.pb.cpp',
 						'proto/Mumble.pb.h',
 					],
+				},{
 					'sources': [
 						'proto/Mumble.proto',
+					],
+					'includes': [
+						'3rdparty/protobufbuild/protoc.gypi',
 					],
 				}],
 				['OS=="linux"', {
