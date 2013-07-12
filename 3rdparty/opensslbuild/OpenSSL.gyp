@@ -9,11 +9,6 @@
 			'product_name': 'crypto',
 			'type':         '<(library)',
 			'hard_dependency': 1,
-			'link_settings': {
-				'libraries': [
-					'-lz',
-				],
-			},
 			'include_dirs': [
 				'../openssl',
 				'include',
@@ -30,7 +25,6 @@
 				'OPENSSL_NO_GMP=1',
 				'OPENSSL_THREADS=1',
 				'_REENTRANT=1',
-				'ZLIB=1',
 			],
 			'sources': [
 				'../openssl/crypto/aes/aes_cbc.c',
@@ -643,17 +637,29 @@
 					'cflags': [ '-fPIC' ],
 					'ldflags': [ '-Wl,-Bsymbolic' ],
 				}],
-				# The xcodeproj generator requires we explicitly
-				# spell out libraries.
-				['OS=="mac" or OS=="ios"', {
+				['openssl_zlib==1', {
 					'link_settings': {
 						'libraries': [
-							'/usr/lib/libz.dylib',
-						],
-						'libraries!': [
 							'-lz',
 						],
-					},	
+					},
+					'defines': [
+						'ZLIB=1',
+					],
+					'conditions': [
+						# The xcodeproj generator requires we explicitly
+						# spell out libraries.
+						['OS=="mac" or OS=="ios"', {
+							'link_settings': {
+								'libraries': [
+									'/usr/lib/libz.dylib',
+								],
+								'libraries!': [
+									'-lz',
+								],
+							},	
+						}],
+					],
 				}],
 				['OS=="win"', {
 					'defines': [
@@ -664,7 +670,6 @@
 						'_UNICODE',
 						'_CRT_SECURE_NO_DEPRECATE',
 					],
-					'defines!': [ 'ZLIB=1' ],
 					'sources!': [
 						'../openssl/crypto/rand/rand_unix.c',
 					],
@@ -969,7 +974,6 @@
 				'OPENSSL_NO_GMP=1',
 				'OPENSSL_THREADS=1',
 				'_REENTRANT=1',
-				'ZLIB=1',
 			],
 			'sources': [
 				'../openssl/ssl/bio_ssl.c',
@@ -1019,6 +1023,11 @@
 				'../openssl/ssl/t1_srvr.c',
 			],
 			'conditions': [
+				['openssl_zlib==1', {
+					'defines': [
+						'ZLIB=1',
+					],
+				}],
 				['"<(library)" == "shared_library"', {
 					'cflags': [ '-fPIC' ],
 					'ldflags': [ '-Wl,-Bsymbolic' ],
@@ -1032,7 +1041,6 @@
 						'_UNICODE',
 						'_CRT_SECURE_NO_DEPRECATE',
 					],
-					'defines!': [ 'ZLIB=1' ],
 				}],
 			],
 		},

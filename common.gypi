@@ -5,6 +5,7 @@
 {
 	'variables': {
 		'use_system_protobuf': 0,
+		'openssl_zlib': 0,
 	},
 	'target_defaults': {
 		'conditions': [
