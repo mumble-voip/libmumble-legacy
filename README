@@ -85,6 +85,14 @@ The test.bash script also expects that you have the
 <ANDROID_SDK>/platform-tools and <ANDROID_NDK> paths in your PATH
 environment variable.
 
+NDK prerequisites
+-----------------
+
+If you're using NDK r8e, you will need to patch your local NDK with
+the following CL to be able to build libprotobuf-lite:
+
+  https://android-review.googlesource.com/#/c/54201/
+
 Building libmumble for iOS
 ==========================
 

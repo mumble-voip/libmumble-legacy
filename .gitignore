@@ -21,3 +21,7 @@ build/android/jni/*.target.mk
 
 # iOS build files.
 build/iphoneos/xcode
+
+# Mac build files
+build/mac/xcode
+build/mac/products

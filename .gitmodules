@@ -10,3 +10,6 @@
 [submodule "3rdparty/gyp"]
 	path = 3rdparty/gyp
 	url = git://github.com/mumble-voip/libmumble-gyp.git
+[submodule "3rdparty/protobuf"]
+	path = 3rdparty/protobuf
+	url = https://github.com/mkrautz/external-protobuf.git

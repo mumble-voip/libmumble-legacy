@@ -17,9 +17,9 @@ GYP=./gyp
 GYPFLAGS="-I common.gypi"
 
 function xcode_build {
-	${GYP} libmumble.gyp ${GYPFLAGS} -f xcode --depth . -Dlibrary=static_library -Dopenssl_asm=gnuas-x86_64 -Dtarget_arch=x64 --generator-out=test
-	xcodebuild -project test/libmumble.xcodeproj/ -target ${EXECUTABLE} -configuration Default CONFIGURATION_BUILD_DIR=test/build || exit 1
-	./test/build/${EXECUTABLE}
+	./build/mac/generate.bash
+	xcodebuild -project build/mac/xcode/libmumble.xcodeproj/ -target ${EXECUTABLE} -configuration Default CONFIGURATION_BUILD_DIR=build/mac/products || exit 1
+	./build/mac/products/${EXECUTABLE}
 }
 
 function msvs_build {

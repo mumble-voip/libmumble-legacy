@@ -3,6 +3,9 @@
 # license that can be found in the LICENSE-file.
 
 {
+	'variables': {
+		'use_system_protobuf': 0,
+	},
 	'target_defaults': {
 		'conditions': [
 			['OS == "win"', {
