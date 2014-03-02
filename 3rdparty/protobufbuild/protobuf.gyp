@@ -65,8 +65,6 @@
             '../protobuf/src/google/protobuf/generated_message_util.h',
             '../protobuf/src/google/protobuf/message_lite.h',
             '../protobuf/src/google/protobuf/repeated_field.h',
-            '../protobuf/src/google/protobuf/unknown_field_set.cc',
-            '../protobuf/src/google/protobuf/unknown_field_set.h',
             '../protobuf/src/google/protobuf/wire_format_lite.h',
             '../protobuf/src/google/protobuf/wire_format_lite_inl.h',
             '../protobuf/src/google/protobuf/io/coded_stream.h',
