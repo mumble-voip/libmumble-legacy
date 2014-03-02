@@ -31,7 +31,7 @@ TLSConnectionPrivate::TLSConnectionPrivate() : thread_id_(0) {
 TLSConnectionPrivate::~TLSConnectionPrivate() {
 }
 
-Error TLSConnectionPrivate::Connect(const std::string &ipaddr, int port) {
+Error TLSConnectionPrivate::Connect(const std::string &ipaddr, int port, TLSConnectionOptions *opts) {
 	int err;
 
 	loop_ = uv_loop_new();
@@ -41,6 +41,10 @@ Error TLSConnectionPrivate::Connect(const std::string &ipaddr, int port) {
 	err = uv_tcp_init(loop_, &tcpsock_);
 	if (err != UV_OK) {
 		return UVUtils::ErrorFromLastUVError(loop_);
+	}
+
+	if (opts != nullptr) {
+		uv_tcp_nodelay(&tcpsock_, opts->tcp_no_delay ? 1 : 0);
 	}
 
 	tcpconn_.data = static_cast<void *>(this);

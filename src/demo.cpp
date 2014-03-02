@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
 		std::cerr << "Disconnect! (local? " << local << ")" << std::endl;
 	});
 
-	mumble::Error err = conn.Connect(std::string("173.194.66.106"), 443);
+	mumble::Error err = conn.Connect(std::string("173.194.66.106"), 443, nullptr);
 	if (err.HasError()) {
 		std::cerr << "Got error from Connect: " << err.String() << std::endl;
 	}

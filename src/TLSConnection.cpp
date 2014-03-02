@@ -15,8 +15,8 @@ TLSConnection::TLSConnection() : priv_(new TLSConnectionPrivate) {
 TLSConnection::~TLSConnection() {
 }
 
-Error TLSConnection::Connect(const std::string &ipaddr, int port) {
-	return priv_->Connect(ipaddr, port);
+Error TLSConnection::Connect(const std::string &ipaddr, int port, TLSConnectionOptions *opts) {
+	return priv_->Connect(ipaddr, port, opts);
 }
 
 void TLSConnection::Disconnect() {

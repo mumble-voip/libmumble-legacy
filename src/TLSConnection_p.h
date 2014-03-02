@@ -32,7 +32,7 @@ public:
 	TLSConnectionPrivate();
 	~TLSConnectionPrivate();
 
-	Error Connect(const std::string &ipaddr, int port);
+	Error Connect(const std::string &ipaddr, int port, TLSConnectionOptions *opts);
 	void Disconnect();
 	void Write(const ByteArray &buf);
 

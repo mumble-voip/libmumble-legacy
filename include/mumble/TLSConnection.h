@@ -19,6 +19,13 @@ namespace mumble {
 
 class TLSConnectionPrivate;
 
+/// TLSConnectionOptions specifies options for a TLSConnections.
+struct TLSConnectionOptions {
+	/// tcp_no_delay determines whether Nagle's algorithm
+	/// should be disabled.
+	bool          tcp_no_delay;
+};
+
 /// TLSConnectionChainVerifyHandler is a handler in TLSConnection that overrides
 /// the TLSConnection's default X.509 verification mechanism.
 ///
@@ -64,11 +71,13 @@ public:
 	///
 	/// @param   ipaddr  The IP adress to connect to.
 	/// @param   port    The port number to connect to.
+	/// @param   opts    Options for the TLS connection. May be null,
+	///                  in which case the default options are used.
 	///
 	/// @return  Returns an Error object representing whether
 	///          or not an Error happened during connection
 	///          initialization.
-	Error Connect(const std::string &ipaddr, int port);
+	Error Connect(const std::string &ipaddr, int port, TLSConnectionOptions *opts);
 
 	/// Disconnect forces the connection to shut down.
 	void Disconnect();
