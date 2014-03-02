@@ -108,7 +108,7 @@
               '../protobuf/src',
             ],
             'defines': [
-              'PROTOBUF_USE_DLLS'
+              'PROTOBUF_USE_DLLS',
               'GOOGLE_PROTOBUF_NO_RTTI',
               'GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER',
             ],
