@@ -93,6 +93,15 @@ TEST(ByteArrayTest, TestTruncate) {
 	EXPECT_EQ(10, b.Capacity());	
 }
 
+TEST(ByteArrayTest, TestTruncateGrow) {
+	mumble::ByteArray b(10);
+	b.Truncate(0);
+	b.Truncate(10);
+
+	EXPECT_EQ(10, b.Length());
+	EXPECT_EQ(10, b.Capacity());
+}
+
 TEST(ByteArrayTest, TestNoAllocAppend) {
 	mumble::ByteArray b(50);
 	b.Truncate(0); // set length to 0, keep cap at 50

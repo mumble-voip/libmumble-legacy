@@ -121,9 +121,9 @@ ByteArray &ByteArray::Append(const ByteArray &chunk) {
 }
 
 // Truncate truncates the length of the ByteArray to len.
-// The new length must be <= the current length.
+// The new length must be <= the current capacity.
 ByteArray &ByteArray::Truncate(int len) {
-	assert(len <= len_);
+	assert(len <= cap_);
 	len_ = len;
 	return *this;
 }
