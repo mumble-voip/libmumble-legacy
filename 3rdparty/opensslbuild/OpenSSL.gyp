@@ -927,6 +927,9 @@
 						'asm/gnuas-arm-elf/crypto/sha/asm/sha256-armv4.S',
 						'asm/gnuas-arm-elf/crypto/sha/asm/sha512-armv4.S',
 					],
+					'sources!': [
+						'../openssl/crypto/aes/aes_core.c',
+					],
 					'conditions': [
 						['OS=="ios"', {
 							'defines!': [
