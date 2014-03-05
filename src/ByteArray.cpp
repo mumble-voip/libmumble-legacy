@@ -87,7 +87,7 @@ char *ByteArray::Data() {
 	return buf_;
 }
 
-ByteArray ByteArray::Slice(int off, int len) {
+ByteArray ByteArray::Slice(int off, int len) const {
 	int remain = len_ - off;
 	// If len is -1, it simply means we should
 	// copy all the remaining bytes.

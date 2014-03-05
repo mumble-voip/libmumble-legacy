@@ -114,7 +114,7 @@ public:
 	///                that will be sliced into a new ByteArray.
 	/// @param   len   The amount of bytes, starting from *off* that will
 	///                be used for the new ByteArray's initial content.
-	ByteArray Slice(int off, int len = -1);
+	ByteArray Slice(int off, int len = -1) const;
 
 	/// Append appends *chunk* to this ByteArray. If this ByteArray's capacity
 	/// allows it, this will be a simple memory copy operation. However, if this
