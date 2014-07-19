@@ -13,7 +13,7 @@
 # ninja or make (if ninja is not available on the
 # system).
 
-GYP=./gyp
+GYP=./3rdparty/gyp/gyp
 GYPFLAGS="-I common.gypi"
 
 function xcode_build {
